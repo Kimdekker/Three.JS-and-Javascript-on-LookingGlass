@@ -1,11 +1,12 @@
+// main.js
+
 import * as THREE from "three/src/Three.js";
 import { VRButton } from "three/examples/jsm/webxr/VRButton.js";
 import {
   LookingGlassWebXRPolyfill,
   LookingGlassConfig,
 } from "@lookingglass/webxr";
-import { FontLoader } from "three/examples/jsm/loaders/FontLoader.js";
-import { TextGeometry } from "three/examples/jsm/geometries/TextGeometry.js";
+import { taakOpCanvas } from "./script/taakOpCanvas";
 
 const config = LookingGlassConfig;
 config.targetY = 0;
@@ -33,48 +34,21 @@ directionalLight.position.set(3, 3, 3);
 scene.add(directionalLight);
 
 
+// ****ALLE OBJECTEN IN HET CANVAS*******************************************************************************************************************************************************
 
+// ****TAAK*************************************
+const texture = taakOpCanvas();
 
-// **Canvas Texture for Plane**
-
-const taak = document.createElement("canvas");
-taak.width = 512;
-taak.height = 256;
-
-const ctx = taak.getContext("2d");
-ctx.fillStyle = "white";
-ctx.fillRect(0, 0, taak.width, taak.height);
-
-ctx.font = "35px helvetica";
-ctx.fillStyle = "black";
-ctx.fillText("Hologram w/ Three.js", 15, 60);
-
-
-ctx.fillStyle = "pink";
-ctx.fillRect(20, 100, 190, 30);
-ctx.fillStyle = "white";
-ctx.font = "20px Arial";
-ctx.fillText("HOLOWORKING", 35, 122);
-
-ctx.fillStyle = "blue";
-ctx.fillRect(20, 160, 150, 50);
-ctx.fillStyle = "white";
-ctx.font = "30px Arial";
-ctx.fillText("Klik mij", 35, 195);
-
-const texture = new THREE.CanvasTexture(taak);
-
-const plane = new THREE.Mesh(
+const taak1 = new THREE.Mesh(
   new THREE.PlaneGeometry(2, 1),
   new THREE.MeshBasicMaterial({ map: texture })
 );
-plane.position.set(0, 1, 0);
-scene.add(plane);
+taak1.position.set(0, 0.5, 0);
+scene.add(taak1);
 
-plane.position.z = -20;
+taak1.position.z = -20;
 let animationSpeed = 0.3;
 let animating = false;
-
 
 window.addEventListener("keydown", (event) => {
   if (event.key === "h" && !animating) {
@@ -82,52 +56,54 @@ window.addEventListener("keydown", (event) => {
   }
 });
 
-
-// **Rotating Cube**
+// ****CUBE*************************************
 const cube = new THREE.Mesh(
   new THREE.BoxGeometry(2, 0.1, 0.1),
-  new THREE.MeshStandardMaterial({ color: "red" })
+  new THREE.MeshStandardMaterial({ color: "#F2D492" })
 );
 scene.add(cube);
 
 window.addEventListener("keydown", (event) => {
   if (event.key === "k") {
-    cube.material.color.set("blue");
+    cube.material.color.set("#F29559");
   }
 });
 
 cube.position.set(0, 0, -2);
 
-// **Render animation loop**
+
+
+
+
+// ****RENDER LOOP*******************************************************************************************************************************************************
 renderer.setAnimationLoop(() => {
   texture.needsUpdate = true;
 
-    // **Animatie logica voor de plane in de z-as**
-  // **Animatie logica voor de plane in de z-as**
-  // **Animatie logica voor de plane in de z-as**
   if (animating) {
-    // Beweeg de plane geleidelijk naar het doel in de z-as
-    if (plane.position.z < 0) {
-      plane.position.z += animationSpeed;
-      if (plane.position.z > 0) plane.position.z = 0; // Zorg dat het niet overschrijdt
+    // Animating the taak1
+    if (taak1.position.z < 0) {
+      taak1.position.z += animationSpeed;
+      if (taak1.position.z > 0) taak1.position.z = 0;
     }
 
-    // Stop de animatie als we het doel bereiken
-    if (plane.position.z === 0) {
-      animating = false; // Zet animatie uit als doel bereikt is
+    if (taak1.position.z === 0) {
+      animating = false;
     }
   }
 
   cube.rotation.z += 0.01;
   cube.rotation.y += 0.02;
-  // Render the scene
+
   renderer.render(scene, camera);
 });
 
 
 
 
-// To make the canvas work for LG
+
+
+
+// ****LOOKING GLASS BUTTON EN RESIZE SHIZZLE*******************************************************************************************************************************************************
 document.body.append(VRButton.createButton(renderer));
 
 function resize() {
