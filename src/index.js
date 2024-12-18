@@ -6,7 +6,7 @@ import {
   LookingGlassWebXRPolyfill,
   LookingGlassConfig,
 } from "@lookingglass/webxr";
-import { taakOpCanvas } from "./script/taakOpCanvas";
+import { taak1OpCanvas } from "./script/taak1OpCanvas";
 
 const config = LookingGlassConfig;
 config.targetY = 0;
@@ -37,16 +37,27 @@ scene.add(directionalLight);
 // ****ALLE OBJECTEN IN HET CANVAS*******************************************************************************************************************************************************
 
 // ****TAAK*************************************
-const texture = taakOpCanvas();
+const textureTaak1 = taak1OpCanvas();
 
 const taak1 = new THREE.Mesh(
   new THREE.PlaneGeometry(2, 1),
-  new THREE.MeshBasicMaterial({ map: texture })
+  new THREE.MeshBasicMaterial({ map: textureTaak1 })
 );
-taak1.position.set(0, 0.5, 0);
+taak1.position.set(-1.2, 0.5, -1.5);
 scene.add(taak1);
 
 taak1.position.z = -20;
+
+const textureTaak2 = taak1OpCanvas();
+
+const taak2 = new THREE.Mesh(
+  new THREE.PlaneGeometry(2, 1),
+  new THREE.MeshBasicMaterial({ map: textureTaak2 })
+);
+taak2.position.set(1.2, 0.5, -1.5);
+scene.add(taak2);
+
+taak2.position.z = -20;
 let animationSpeed = 0.3;
 let animating = false;
 
@@ -56,20 +67,23 @@ window.addEventListener("keydown", (event) => {
   }
 });
 
+
+
+
 // ****CUBE*************************************
 const cube = new THREE.Mesh(
-  new THREE.BoxGeometry(2, 0.1, 0.1),
+  new THREE.BoxGeometry(2, 2, 2),
   new THREE.MeshStandardMaterial({ color: "#F2D492" })
 );
 scene.add(cube);
 
 window.addEventListener("keydown", (event) => {
   if (event.key === "k") {
-    cube.material.color.set("#F29559");
+    cube.material.color.set("#F9629F");
   }
 });
 
-cube.position.set(0, 0, -2);
+cube.position.set(0, 0, -5);
 
 
 
@@ -77,16 +91,24 @@ cube.position.set(0, 0, -2);
 
 // ****RENDER LOOP*******************************************************************************************************************************************************
 renderer.setAnimationLoop(() => {
-  texture.needsUpdate = true;
-
   if (animating) {
     // Animating the taak1
     if (taak1.position.z < 0) {
       taak1.position.z += animationSpeed;
-      if (taak1.position.z > 0) taak1.position.z = 0;
+      if (taak1.position.z > -1.5) taak1.position.z = -1.5;
     }
 
-    if (taak1.position.z === 0) {
+    if (taak1.position.z === -2.2) {
+      animating = false;
+    }
+
+
+    if (taak2.position.z < 0) {
+      taak2.position.z += animationSpeed;
+      if (taak2.position.z > -1.5) taak2.position.z = -1.5;
+    }
+
+    if (taak2.position.z === -2.2) {
       animating = false;
     }
   }

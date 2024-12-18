@@ -1,16 +1,19 @@
 import * as THREE from "three";
 
-export function taakOpCanvas() {
+export function taak1OpCanvas() {
   const taak = document.createElement("canvas");
   taak.width = 512 * 2;
   taak.height = 256 * 2;
 
   const ctx = taak.getContext("2d");
-
-  ctx.fillStyle = "#202C39";
+  
   ctx.beginPath();
-  ctx.roundRect(0, 0, taak.width, taak.height, [40]);
-  ctx.fill();
+  ctx.roundRect(0, 0, taak.width, taak.height, [50]); // border radius
+  ctx.clip(); // clip border radius op image
+  ctx.filter = 'blur(10px)';
+  var quantumImg = document.getElementById("quantum");
+  ctx.drawImage(quantumImg, 0, 0, taak.width, taak.height);
+  ctx.filter = 'none';
 
   ctx.font = "90px helvetica";
   ctx.fillStyle = "#fff";
