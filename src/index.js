@@ -71,25 +71,8 @@ scene.add(directionalLight);
 
 
 // ****CUBE*************************************
-const textureLoader = new THREE.TextureLoader();
 
-// Load textures
-const albedoMap = textureLoader.load('./assets/texture/textureMapPanel_albedo.jpeg', 
-  () => console.log('Albedo loaded'),
-  undefined,
-  (err) => console.error('Failed to load albedo', err)
-);
 
-// Create material
-const material = new THREE.MeshBasicMaterial({
-  map: albedoMap, // Start with basic material to debug
-});
-
-// Create geometry and mesh
-const geometry = new THREE.BoxGeometry(1, 1, 1);
-geometry.attributes.uv2 = geometry.attributes.uv; // Required for aoMap if used
-const cube = new THREE.Mesh(geometry, material);
-scene.add(cube);
 
 
 // // Load all maps
@@ -115,7 +98,10 @@ scene.add(cube);
 //   // aoMapIntensity: 1.0,         // AO intensity
 // });
 
-
+// Create the geometry and mesh
+const geometry = new THREE.BoxGeometry(1, 1, 1);
+const cube = new THREE.Mesh(geometry, material);
+scene.add(cube);
 
 
 window.addEventListener("keydown", (event) => {
