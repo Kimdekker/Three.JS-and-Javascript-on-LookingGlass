@@ -20,6 +20,9 @@ export function cube() {
         metalness: 0.5,              // Base metallic value
         aoMap: aoMap,                // Ambient occlusion
         aoMapIntensity: 1.0,         // AO intensity
+
+        emissive: new THREE.Color(0x9b4fe0), // Neon purple color
+        emissiveIntensity: 0.3, // Intensity of the glow effect
     });
 
     // Create the geometry and mesh

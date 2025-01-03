@@ -8,6 +8,7 @@ import {
 } from "@lookingglass/webxr";
 import { taak1OpCanvas } from "./script/taak1OpCanvas";
 import { cube } from "./script/cube.js";
+import { UnrealBloomPass } from "/node_modules/three/examples/jsm/postprocessing/UnrealBloomPass.js";
 
 
 
@@ -35,11 +36,11 @@ camera.position.z = 3;
 const purpleLight = new THREE.AmbientLight(0xE6E6FA, 0.8); // Dim purple ambient light
 scene.add(purpleLight);
 
-// Add focused blue spotlight
-const blueLight = new THREE.SpotLight(0xffffff, 0.6); // Soft yellow spotlight
-blueLight.position.set(3, 5, -8);
-blueLight.castShadow = true; // Cast shadows for a dramatic effect
-scene.add(blueLight);
+// Add focused white spotlight
+const whiteLight = new THREE.SpotLight(0xffffff, 0.6); // Soft white spotlight
+whiteLight.position.set(3, 5, -8);
+whiteLight.castShadow = true; // Cast shadows for a dramatic effect
+scene.add(whiteLight);
 
 // Add a backlight shining from behind the object
 const backLight = new THREE.SpotLight(0xA020F0, 0.9); // Purple backlight
@@ -49,15 +50,6 @@ backLight.castShadow = true;
 scene.add(backLight);
 
 
-
-
-
-// const glowingObject = new THREE.Mesh(
-//   new THREE.SphereGeometry(0.5, 32, 32),
-//   new THREE.MeshStandardMaterial({ color: 0xffcc00, emissive: 0xffcc00 })
-// );
-// glowingObject.position.set(0, 0, 0);
-// scene.add(glowingObject);
 
 
 // ****ALLE OBJECTEN IN HET CANVAS*******************************************************************************************************************************************************
@@ -104,6 +96,8 @@ const cubeMesh = cube();
 scene.add(cubeMesh);
 
 cubeMesh.position.set(0, 0, -3);
+
+
 
 
 // ****RENDER LOOP*******************************************************************************************************************************************************
