@@ -81,7 +81,7 @@ This is a list of things you need to use before getting started. Luckily, as you
 
 1. Clone the repo
    ```sh
-   git clone https://github.com/github_username/repo_name.git
+   git clone https://github.com/Kimdekker/Three.JS-and-Javascript-on-LookingGlass.git
    ```
 2. Install NPM packages
    ```sh
