@@ -31,10 +31,33 @@ const camera = new THREE.PerspectiveCamera();
 camera.position.z = 3;
 
 // **Lights**
-scene.add(new THREE.AmbientLight(0xaaaaaa));
-const directionalLight = new THREE.DirectionalLight(0xffffff);
-directionalLight.position.set(3, 3, 3);
-scene.add(directionalLight);
+// Add dim purple ambient light
+const purpleLight = new THREE.AmbientLight(0xE6E6FA, 0.8); // Dim purple ambient light
+scene.add(purpleLight);
+
+// Add focused blue spotlight
+const blueLight = new THREE.SpotLight(0xffffff, 0.6); // Soft yellow spotlight
+blueLight.position.set(3, 5, -8);
+blueLight.castShadow = true; // Cast shadows for a dramatic effect
+scene.add(blueLight);
+
+// Add a backlight shining from behind the object
+const backLight = new THREE.SpotLight(0xA020F0, 0.9); // Purple backlight
+backLight.position.set(5, -5, -3); // Adjust position to be behind the object
+backLight.target.position.set(0, 0, 0); // Make it shine on the object (e.g., at the origin)
+backLight.castShadow = true;
+scene.add(backLight);
+
+
+
+
+
+// const glowingObject = new THREE.Mesh(
+//   new THREE.SphereGeometry(0.5, 32, 32),
+//   new THREE.MeshStandardMaterial({ color: 0xffcc00, emissive: 0xffcc00 })
+// );
+// glowingObject.position.set(0, 0, 0);
+// scene.add(glowingObject);
 
 
 // ****ALLE OBJECTEN IN HET CANVAS*******************************************************************************************************************************************************
@@ -84,9 +107,11 @@ cubeMesh.position.set(0, 0, -3);
 
 
 // ****RENDER LOOP*******************************************************************************************************************************************************
+let clock = new THREE.Clock();
+
 renderer.setAnimationLoop(() => {
   if (animating) {
-    // Animating the taak1
+    // Animating taak1
     if (taak1.position.z < 0) {
       taak1.position.z += animationSpeed;
       if (taak1.position.z > -1.5) taak1.position.z = -1.5;
@@ -96,7 +121,7 @@ renderer.setAnimationLoop(() => {
       animating = false;
     }
 
-
+    // Animating taak2
     if (taak2.position.z < 0) {
       taak2.position.z += animationSpeed;
       if (taak2.position.z > -1.5) taak2.position.z = -1.5;
@@ -107,11 +132,17 @@ renderer.setAnimationLoop(() => {
     }
   }
 
-  cubeMesh.rotation.z += 0.001;
-  cubeMesh.rotation.y += 0.001;
+  // Hover effect for cubeMesh
+  let time = clock.getElapsedTime(); // Get the elapsed time
+  cubeMesh.position.y = Math.sin(time * 2) * 0.1; // Oscillate up and down
 
+  cubeMesh.rotation.z += 0.001;
+  cubeMesh.rotation.y += 0.002;
+
+  // Render the scene
   renderer.render(scene, camera);
 });
+
 
 
 
