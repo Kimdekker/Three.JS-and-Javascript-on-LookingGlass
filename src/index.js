@@ -8,7 +8,6 @@ import {
 } from "@lookingglass/webxr";
 import { taak1OpCanvas } from "./script/taak1OpCanvas";
 import { cube } from "./script/cube.js";
-import { UnrealBloomPass } from "/node_modules/three/examples/jsm/postprocessing/UnrealBloomPass.js";
 
 
 
@@ -64,35 +63,35 @@ scene.add(backLightTw);
 // ****ALLE OBJECTEN IN HET CANVAS*******************************************************************************************************************************************************
 
 // ****TAAK*************************************
-const textureTaak1 = taak1OpCanvas();
+// const textureTaak1 = taak1OpCanvas();
 
-const taak1 = new THREE.Mesh(
-  new THREE.PlaneGeometry(2, 1),
-  new THREE.MeshBasicMaterial({ map: textureTaak1 })
-);
-taak1.position.set(-1.2, 0.5, -1.2);
-scene.add(taak1);
+// const taak1 = new THREE.Mesh(
+//   new THREE.PlaneGeometry(2, 1),
+//   new THREE.MeshBasicMaterial({ map: textureTaak1 })
+// );
+// taak1.position.set(-1.2, 0.5, -1.2);
+// scene.add(taak1);
 
-taak1.position.z = -20;
+// taak1.position.z = -20;
 
-const textureTaak2 = taak1OpCanvas();
+// const textureTaak2 = taak1OpCanvas();
 
-const taak2 = new THREE.Mesh(
-  new THREE.PlaneGeometry(2, 1),
-  new THREE.MeshBasicMaterial({ map: textureTaak2 })
-);
-taak2.position.set(1.2, 0.5, -1.2);
-scene.add(taak2);
+// const taak2 = new THREE.Mesh(
+//   new THREE.PlaneGeometry(2, 1),
+//   new THREE.MeshBasicMaterial({ map: textureTaak2 })
+// );
+// taak2.position.set(1.2, 0.5, -1.2);
+// scene.add(taak2);
 
-taak2.position.z = -20;
-let animationSpeed = 0.3;
-let animating = false;
+// taak2.position.z = -20;
+// let animationSpeed = 0.3;
+// let animating = false;
 
-window.addEventListener("keydown", (event) => {
-  if (event.key === "h" && !animating) {
-    animating = true;
-  }
-});
+// window.addEventListener("keydown", (event) => {
+//   if (event.key === "h" && !animating) {
+//     animating = true;
+//   }
+// });
 
 
 
@@ -113,27 +112,27 @@ cubeMesh.rotation.set(45, 45, 0);
 let clock = new THREE.Clock();
 
 renderer.setAnimationLoop(() => {
-  if (animating) {
-    // Animating taak1
-    if (taak1.position.z < 0) {
-      taak1.position.z += animationSpeed;
-      if (taak1.position.z > -1.5) taak1.position.z = -1.5;
-    }
+  // if (animating) {
+  //   // Animating taak1
+  //   if (taak1.position.z < 0) {
+  //     taak1.position.z += animationSpeed;
+  //     if (taak1.position.z > -1.5) taak1.position.z = -1.5;
+  //   }
 
-    if (taak1.position.z === -2.2) {
-      animating = false;
-    }
+  //   if (taak1.position.z === -2.2) {
+  //     animating = false;
+  //   }
 
-    // Animating taak2
-    if (taak2.position.z < 0) {
-      taak2.position.z += animationSpeed;
-      if (taak2.position.z > -1.5) taak2.position.z = -1.5;
-    }
+  //   // Animating taak2
+  //   if (taak2.position.z < 0) {
+  //     taak2.position.z += animationSpeed;
+  //     if (taak2.position.z > -1.5) taak2.position.z = -1.5;
+  //   }
 
-    if (taak2.position.z === -2.2) {
-      animating = false;
-    }
-  }
+  //   if (taak2.position.z === -2.2) {
+  //     animating = false;
+  //   }
+  // }
 
   // Hover effect for cubeMesh
   let time = clock.getElapsedTime(); // Get the elapsed time
