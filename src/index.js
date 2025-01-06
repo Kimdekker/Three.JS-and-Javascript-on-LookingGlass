@@ -32,22 +32,31 @@ const camera = new THREE.PerspectiveCamera();
 camera.position.z = 3;
 
 // **Lights**
-// Add dim purple ambient light
-const purpleLight = new THREE.AmbientLight(0xE6E6FA, 0.8); // Dim purple ambient light
-scene.add(purpleLight);
+// Add dim blue ambient light
+const blueLight = new THREE.AmbientLight(0xCCD9FF, 0.8); // Dim blue ambient light
+scene.add(blueLight);
 
 // Add focused white spotlight
-const whiteLight = new THREE.SpotLight(0xffffff, 0.6); // Soft white spotlight
+const whiteLight = new THREE.SpotLight(0xffffff, 0.5); // Soft white spotlight
 whiteLight.position.set(3, 5, -8);
 whiteLight.castShadow = true; // Cast shadows for a dramatic effect
 scene.add(whiteLight);
 
 // Add a backlight shining from behind the object
-const backLight = new THREE.SpotLight(0xA020F0, 0.9); // Purple backlight
-backLight.position.set(5, -5, -3); // Adjust position to be behind the object
+const backLight = new THREE.SpotLight(0x0051FF, 0.9); // Blue backlight
+backLight.position.set(5, -3, -5); // Adjust position to be behind the object
 backLight.target.position.set(0, 0, 0); // Make it shine on the object (e.g., at the origin)
 backLight.castShadow = true;
 scene.add(backLight);
+
+const backLightTw = new THREE.SpotLight(0x02297D, 0.9); // Blue backlight
+backLightTw.position.set(-5, 3, -5); // Adjust position to be behind the object
+backLightTw.target.position.set(0, 0, 0); // Make it shine on the object (e.g., at the origin)
+backLightTw.castShadow = true;
+scene.add(backLightTw);
+
+
+
 
 
 
@@ -96,7 +105,7 @@ const cubeMesh = cube();
 scene.add(cubeMesh);
 
 cubeMesh.position.set(0, 0, -3);
-
+cubeMesh.rotation.set(45, 45, 0);
 
 
 
@@ -131,7 +140,7 @@ renderer.setAnimationLoop(() => {
   cubeMesh.position.y = Math.sin(time * 2) * 0.1; // Oscillate up and down
 
   cubeMesh.rotation.z += 0.001;
-  cubeMesh.rotation.y += 0.002;
+  cubeMesh.rotation.y += 0.001;
 
   // Render the scene
   renderer.render(scene, camera);
