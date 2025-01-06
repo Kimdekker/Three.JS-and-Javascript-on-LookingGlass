@@ -8,6 +8,7 @@ import {
 } from "@lookingglass/webxr";
 import { taak1OpCanvas } from "./script/taak1OpCanvas";
 import { cube } from "./script/cube.js";
+import { starBackground } from "./script/starBackground.js";
 
 
 
@@ -106,6 +107,11 @@ scene.add(cubeMesh);
 cubeMesh.position.set(0, 0, -3);
 cubeMesh.rotation.set(45, 45, 0);
 
+
+
+// ****STARS*************************************
+
+starBackground(scene, 2000, 400); // Adjust count and areaSize as needed
 
 
 // ****RENDER LOOP*******************************************************************************************************************************************************
