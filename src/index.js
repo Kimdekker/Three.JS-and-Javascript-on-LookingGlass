@@ -111,7 +111,7 @@ cubeMesh.rotation.set(45, 45, 0);
 
 // ****STARS*************************************
 
-starBackground(scene, 2000, 400); // Adjust count and areaSize as needed
+starBackground(scene, 100, 5); // Adjust count and areaSize as needed
 
 
 // ****RENDER LOOP*******************************************************************************************************************************************************
