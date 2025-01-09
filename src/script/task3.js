@@ -20,11 +20,11 @@ export function task3() {
     ctx.fill();
 
     ctx.fillStyle = "#FFFFFF";
-    ctx.fillRect(140, 52, 230, 50);
+    ctx.fillRect(145, 52, 220, 50); // position x, y, width, height
 
     ctx.fillStyle = "#000000";
     ctx.font = "300 30px helvetica";
-    ctx.fillText("Quantum Mech", 150, 88);
+    ctx.fillText("Nano Cleaning", 155, 88); // text, x = height, y = width
 
     // Create sprite for the 2D element
     const texture = new THREE.CanvasTexture(canvas);
