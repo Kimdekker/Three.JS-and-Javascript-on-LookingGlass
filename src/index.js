@@ -6,9 +6,11 @@ import {
   LookingGlassWebXRPolyfill,
   LookingGlassConfig,
 } from "@lookingglass/webxr";
-import { taak1OpCanvas } from "./script/taak1OpCanvas";
 import { cube } from "./script/cube.js";
 import { starBackground } from "./script/starBackground.js";
+import { task1 } from "./script/task1.js";
+import { task2 } from "./script/task2.js";
+import { task3 } from "./script/task3.js";
 
 
 
@@ -27,37 +29,30 @@ document.body.append(renderer.domElement);
 renderer.xr.enabled = true;
 renderer.setPixelRatio(window.devicePixelRatio);
 
-// **Camera**
+
+
+// **************************Camera******************************************
 const camera = new THREE.PerspectiveCamera();
 camera.position.z = 3;
 
-// **Lights**
+// ***************************Lights****************************************
 // Add dim blue ambient light
 const blueLight = new THREE.AmbientLight(0xCCD9FF, 0.8); // Dim blue ambient light
 scene.add(blueLight);
 
 // Add focused white spotlight
-const whiteLight = new THREE.SpotLight(0xffffff, 0.5); // Soft white spotlight
-whiteLight.position.set(3, 5, -8);
-whiteLight.castShadow = true; // Cast shadows for a dramatic effect
+const whiteLight = new THREE.SpotLight(0xffffff, 0.3); // Soft white spotlight
+whiteLight.position.set(0, 5, -8);
 scene.add(whiteLight);
 
 // Add a backlight shining from behind the object
 const backLight = new THREE.SpotLight(0x0051FF, 0.9); // Blue backlight
-backLight.position.set(5, -3, -5); // Adjust position to be behind the object
-backLight.target.position.set(0, 0, 0); // Make it shine on the object (e.g., at the origin)
-backLight.castShadow = true;
+backLight.position.set(5, -3, -10); // Adjust position to be behind the object
 scene.add(backLight);
 
 const backLightTw = new THREE.SpotLight(0x02297D, 0.9); // Blue backlight
-backLightTw.position.set(-5, 3, -5); // Adjust position to be behind the object
-backLightTw.target.position.set(0, 0, 0); // Make it shine on the object (e.g., at the origin)
-backLightTw.castShadow = true;
+backLightTw.position.set(-5, 3, -10); // Adjust position to be behind the object
 scene.add(backLightTw);
-
-
-
-
 
 
 
@@ -111,7 +106,57 @@ cubeMesh.rotation.set(45, 45, 0);
 
 // ****STARS*************************************
 
-starBackground(scene, 100, 5); // Adjust count and areaSize as needed
+starBackground(scene, 100, 5); // Adjust count and areaSize
+
+
+
+// ****TASKS*************************************
+
+
+// const taskOne = task1();
+// scene.add(taskOne);
+
+// taskOne.position.set(-1, 0, 0);
+
+
+// const taskTwo = task2();
+// scene.add(taskTwo);
+
+// taskTwo.position.set(0, 0, 0);
+
+// const taskThree = task3();
+// scene.add(taskThree);
+
+// taskThree.position.set(1, 0, 0);
+
+// Task 1: Red Light
+const taskOne = task1();
+scene.add(taskOne);
+taskOne.position.set(-1, 0, 0);
+
+const redLight = new THREE.PointLight(0xff0000, 15, 3);
+redLight.position.set(-2, 0, 2);
+scene.add(redLight);
+
+// Task 2: Green Light
+const taskTwo = task2();
+scene.add(taskTwo);
+taskTwo.position.set(0, 0, 0);
+
+const greenLight = new THREE.PointLight(0x00ff00, 20, 1.2);
+greenLight.position.set(0, 0, 1);
+scene.add(greenLight);
+
+// Task 3: Blue Light
+const taskThree = task3();
+scene.add(taskThree);
+taskThree.position.set(1, 0, 0);
+
+const blueLighting = new THREE.PointLight(0x0000ff, 15, 3);
+blueLighting.position.set(2, 0, 2);
+scene.add(blueLighting);
+
+
 
 
 // ****RENDER LOOP*******************************************************************************************************************************************************
@@ -146,6 +191,14 @@ renderer.setAnimationLoop(() => {
 
   cubeMesh.rotation.z += 0.001;
   cubeMesh.rotation.y += 0.001;
+
+  taskOne.rotation.y += 0.01;
+
+  taskTwo.rotation.y += 0.01;
+
+  taskThree.rotation.y += 0.01;
+
+
 
   // Render the scene
   renderer.render(scene, camera);

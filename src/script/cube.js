@@ -26,7 +26,7 @@ export function cube() {
     });
 
     // Create the geometry and mesh
-    const geometry = new RoundedBoxGeometry(2, 2, 2, 10, 0.2);  // Size: 1x1x1, Segments: 10, Radius: 0.1
+    const geometry = new RoundedBoxGeometry(2, 2, 2, 10, 0.09);  // Size: 1x1x1, Segments, Radius
     const cube = new THREE.Mesh(geometry, material);
 
     return cube;
