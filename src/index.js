@@ -58,39 +58,6 @@ scene.add(backLightTw);
 
 // ****ALLE OBJECTEN IN HET CANVAS*******************************************************************************************************************************************************
 
-// ****TAAK*************************************
-// const textureTaak1 = taak1OpCanvas();
-
-// const taak1 = new THREE.Mesh(
-//   new THREE.PlaneGeometry(2, 1),
-//   new THREE.MeshBasicMaterial({ map: textureTaak1 })
-// );
-// taak1.position.set(-1.2, 0.5, -1.2);
-// scene.add(taak1);
-
-// taak1.position.z = -20;
-
-// const textureTaak2 = taak1OpCanvas();
-
-// const taak2 = new THREE.Mesh(
-//   new THREE.PlaneGeometry(2, 1),
-//   new THREE.MeshBasicMaterial({ map: textureTaak2 })
-// );
-// taak2.position.set(1.2, 0.5, -1.2);
-// scene.add(taak2);
-
-// taak2.position.z = -20;
-// let animationSpeed = 0.3;
-// let animating = false;
-
-// window.addEventListener("keydown", (event) => {
-//   if (event.key === "h" && !animating) {
-//     animating = true;
-//   }
-// });
-
-
-
 
 // ****CUBE*************************************
 
@@ -100,8 +67,15 @@ const cubeMesh = cube();
 scene.add(cubeMesh);
 
 cubeMesh.position.set(0, 0, -3);
-cubeMesh.rotation.set(45, 45, 0);
+cubeMesh.rotation.set(Math.PI / 4, Math.PI / -4, 0);
 
+// Default target position and rotation for animation of the cube going backwards
+let targetPosition = new THREE.Vector3(0, 0, -3); 
+let targetRotation = new THREE.Euler(Math.PI / 4, Math.PI / -4, 0);
+let currentRotation = new THREE.Euler();
+
+let animatingRotation = false;
+let animateRotatingCube = true;
 
 
 // ****STARS*************************************
@@ -113,23 +87,7 @@ starBackground(scene, 100, 5); // Adjust count and areaSize
 // ****TASKS*************************************
 
 
-// const taskOne = task1();
-// scene.add(taskOne);
-
-// taskOne.position.set(-1, 0, 0);
-
-
-// const taskTwo = task2();
-// scene.add(taskTwo);
-
-// taskTwo.position.set(0, 0, 0);
-
-// const taskThree = task3();
-// scene.add(taskThree);
-
-// taskThree.position.set(1, 0, 0);
-
-// Task 1: Red Light
+// Task 1 with Red Light
 const taskOne = task1();
 scene.add(taskOne);
 taskOne.position.set(-1, 0, 0);
@@ -138,7 +96,9 @@ const redLight = new THREE.PointLight(0xff0000, 15, 3);
 redLight.position.set(-2, 0, 2);
 scene.add(redLight);
 
-// Task 2: Green Light
+taskOne.position.z = -20;
+
+// Task 2 with Green Light
 const taskTwo = task2();
 scene.add(taskTwo);
 taskTwo.position.set(0, 0, 0);
@@ -147,7 +107,10 @@ const greenLight = new THREE.PointLight(0x00ff00, 20, 1.2);
 greenLight.position.set(0, 0, 1);
 scene.add(greenLight);
 
-// Task 3: Blue Light
+taskTwo.position.z = -20;
+
+
+// Task 3 with Blue Light
 const taskThree = task3();
 scene.add(taskThree);
 taskThree.position.set(1, 0, 0);
@@ -156,41 +119,88 @@ const blueLighting = new THREE.PointLight(0x0000ff, 15, 3);
 blueLighting.position.set(2, 0, 2);
 scene.add(blueLighting);
 
+taskThree.position.z = -20;
 
+// Animeren van achter naar voor als klik op h
+
+let animationSpeed = 0.1;
+let animatingTasks = false;
+
+window.addEventListener("keydown", (event) => {
+  if (event.key === "ArrowRight" && !animatingTasks) {
+    animatingTasks = true;
+    animatingRotation = true
+
+    currentRotation.copy(cubeMesh.rotation);
+
+    targetPosition.set(0, 0, -6);
+    targetRotation.set(Math.PI / 2, Math.PI / 2, 0);
+
+  }
+});
 
 
 // ****RENDER LOOP*******************************************************************************************************************************************************
 let clock = new THREE.Clock();
 
 renderer.setAnimationLoop(() => {
-  // if (animating) {
-  //   // Animating taak1
-  //   if (taak1.position.z < 0) {
-  //     taak1.position.z += animationSpeed;
-  //     if (taak1.position.z > -1.5) taak1.position.z = -1.5;
-  //   }
+  if (animatingTasks) {
+    const arcHeight = -4; // adjust height of the arc
+    
+    // Animating taskOne
+    if (taskOne.position.z < 0) {
+      taskOne.position.z += animationSpeed;
+  
+      // Calculate the y position for the arc
+      const t = taskOne.position.z / -20; // Normalize z to a 0-1 range
+      taskOne.position.y = -4 * arcHeight * t * (1 - t); // Quadratic curve formula
+    }
+  
+    // Animating taskTwo
+    if (taskTwo.position.z < 0) {
+      taskTwo.position.z += animationSpeed;
+  
+      const t = taskTwo.position.z / -20;
+      taskTwo.position.y = -4 * arcHeight * t * (1 - t);
+    }
+  
+    // Animating taskThree
+    if (taskThree.position.z < 0) {
+      taskThree.position.z += animationSpeed;
+  
+      const t = taskThree.position.z / -20;
+      taskThree.position.y = -4 * arcHeight * t * (1 - t);
 
-  //   if (taak1.position.z === -2.2) {
-  //     animating = false;
-  //   }
+    }
+  }
 
-  //   // Animating taak2
-  //   if (taak2.position.z < 0) {
-  //     taak2.position.z += animationSpeed;
-  //     if (taak2.position.z > -1.5) taak2.position.z = -1.5;
-  //   }
 
-  //   if (taak2.position.z === -2.2) {
-  //     animating = false;
-  //   }
-  // }
+  // cube mesh animation backwards
+
+  cubeMesh.position.lerp(targetPosition, 0.02); // Adjust the speed for position
+
+    // Animate rotation to targetRotation
+    if (animatingRotation) {
+      const targetQuat = new THREE.Quaternion().setFromEuler(targetRotation);
+  
+      // Slerp between the current and target quaternions
+      cubeMesh.quaternion.slerp(targetQuat, 0.02); // Adjust speed
+  
+      // Check if rotation is close to target to stop animating
+      if (cubeMesh.quaternion.angleTo(targetQuat) < 0.01) {
+        animatingRotation = false;
+        animateRotatingCube = false;
+      }
+    }
+
+  if (animateRotatingCube) {
+    cubeMesh.rotation.x += 0.003;
+    cubeMesh.rotation.y += 0.003;
+  }
 
   // Hover effect for cubeMesh
   let time = clock.getElapsedTime(); // Get the elapsed time
   cubeMesh.position.y = Math.sin(time * 2) * 0.1; // Oscillate up and down
-
-  cubeMesh.rotation.z += 0.001;
-  cubeMesh.rotation.y += 0.001;
 
   taskOne.rotation.y += 0.01;
 
@@ -203,10 +213,6 @@ renderer.setAnimationLoop(() => {
   // Render the scene
   renderer.render(scene, camera);
 });
-
-
-
-
 
 
 
