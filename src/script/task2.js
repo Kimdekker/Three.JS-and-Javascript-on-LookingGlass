@@ -13,18 +13,18 @@ export function task2() {
     // Draw on the canvas
     ctx.fillStyle = "#FFFFFF";
     ctx.beginPath();
-    ctx.moveTo(255, 30);
-    ctx.lineTo(275, 70);
-    ctx.lineTo(235, 70);
+    ctx.moveTo(255, 10);
+    ctx.lineTo(275, 50);
+    ctx.lineTo(235, 50);
     ctx.closePath();
     ctx.fill();
 
     ctx.fillStyle = "#FFFFFF";
-    ctx.fillRect(158, 52, 194, 50);
+    ctx.fillRect(100, 35, 310, 60);
 
     ctx.fillStyle = "#000000";
-    ctx.font = "300 30px helvetica";
-    ctx.fillText("Biasoderator", 168, 88);
+    ctx.font = "300 50px helvetica";
+    ctx.fillText("Biasoderator", 110, 80);
 
     // Create sprite for the 2D element
     const texture = new THREE.CanvasTexture(canvas);

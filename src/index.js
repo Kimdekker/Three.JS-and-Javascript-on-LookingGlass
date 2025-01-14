@@ -74,6 +74,7 @@ let targetPosition = new THREE.Vector3(0, 0, -1);
 let targetRotation = new THREE.Euler(Math.PI / 4, Math.PI / -4, 0);
 let currentRotation = new THREE.Euler();
 
+
 let animatingRotation = false;
 let animateRotatingCube = true;
 
@@ -87,76 +88,142 @@ starBackground(scene, 100, 5); // Adjust count and areaSize
 // ****TASKS*************************************
 
 
-const taskTest = task1();
-scene.add(taskTest);
-taskTest.position.set(-1, 0, 0);
+// const taskTest = task1();
+// scene.add(taskTest);
+// taskTest.position.set(-1, 0, 0);
 
-const testLight = new THREE.PointLight(0xff0000, 15, 3);
-testLight.position.set(-2, 0, 2);
-scene.add(testLight);
+// const testLight = new THREE.PointLight(0xff0000, 15, 3);
+// testLight.position.set(-1, 0, 2);
+// scene.add(testLight);
+
+// const taskTest2 = task2();
+// scene.add(taskTest2);
+// taskTest2.position.set(0, 0, 0);
+
+// const testLight2 = new THREE.PointLight(0x00ff00, 15, 3);
+// testLight2.position.set(0, 0, 2);
+// scene.add(testLight2);
+
+
+// const taskTest3 = task3();
+// scene.add(taskTest3);
+// taskTest3.position.set(1, 0, 0);
+
+// const testLight3 = new THREE.PointLight(0x0000ff, 15, 3);
+// testLight3.position.set(1, 0, 2);
+// scene.add(testLight3);
 
 // Task 1 with Red Light
-// const taskOne = task1();
-// scene.add(taskOne);
-// taskOne.position.set(-1, 0, 10);
+const taskOne = task1();
+scene.add(taskOne);
+taskOne.position.set(-1, 0, 10);
 
-// const redLight = new THREE.PointLight(0xff0000, 15, 3);
-// redLight.position.set(-2, 0, 6);
-// redLight.intensity = 0;
-// scene.add(redLight);
+const redLight = new THREE.PointLight(0xff0000, 15, 3);
+redLight.position.set(-2, 0, 6);
+redLight.intensity = 0;
+scene.add(redLight);
 
-// let redLightIn = false
+let redLightIn = false
 
-// taskOne.position.z = -20;
+taskOne.position.z = -20;
 
-// // Task 2 with Green Light
-// const taskTwo = task2();
-// scene.add(taskTwo);
-// taskTwo.position.set(0, 0, 10);
+// Task 2 with Green Light
+const taskTwo = task2();
+scene.add(taskTwo);
+taskTwo.position.set(0, 0, 10);
 
-// const greenLight = new THREE.PointLight(0x00ff00, 20, 1.2);
-// greenLight.position.set(0, 0, 5);
-// greenLight.intensity = 0;
-// scene.add(greenLight);
+const greenLight = new THREE.PointLight(0x00ff00, 20, 1.2);
+greenLight.position.set(0, 0, 5);
+greenLight.intensity = 0;
+scene.add(greenLight);
 
-// let greenLightIn = false
+let greenLightIn = false
 
-// taskTwo.position.z = -20;
+taskTwo.position.z = -20;
 
 
-// // Task 3 with Blue Light
-// const taskThree = task3();
-// scene.add(taskThree);
-// taskThree.position.set(1, 0, 10);
+// Task 3 with Blue Light
+const taskThree = task3();
+scene.add(taskThree);
+taskThree.position.set(1, 0, 10);
 
-// const blueLighting = new THREE.PointLight(0x0000ff, 15, 3);
-// blueLighting.position.set(2, 0, 6);
-// blueLighting.intensity = 0;
-// scene.add(blueLighting);
+const blueLighting = new THREE.PointLight(0x0000ff, 15, 3);
+blueLighting.position.set(2, 0, 6);
+blueLighting.intensity = 0;
+scene.add(blueLighting);
 
-// let blueLightIn = false
+let blueLightIn = false
 
-// taskThree.position.z = -20;
+taskThree.position.z = -20;
 
-// Animeren van achter naar voor als klik op h
 
 let animationSpeed = 0.5;
 let animatingTasks = false;
 
+let state = "home"; // Mogelijke states: "home", "tasks", "taskInDepth"
+
 window.addEventListener("keydown", (event) => {
-  if (event.key === "ArrowRight" && !animatingTasks) {
-    animatingTasks = true;
-    animatingRotation = true
+  if (event.key === "ArrowRight") {
+    switch (state) {
+      case "home":
+        state = "tasks";
+        animatingTasks = true;
+        animatingRotation = true;
 
-    currentRotation.copy(cubeMesh.rotation);
+        currentRotation.copy(cubeMesh.rotation);
+        targetPosition.set(0, 0, -6);
+        targetRotation.set(Math.PI / 2, Math.PI / 2, 0);
 
-    targetPosition.set(0, 0, -6);
-    targetRotation.set(Math.PI / 2, Math.PI / 2, 0);
+        redLightIn = true;
+        greenLightIn = true;
+        blueLightIn = true;
 
-    // redLightIn = true;
-    // greenLightIn = true;
-    // blueLightIn = true;
+        console.log("Je bent op de tasks");
+        break;
 
+      case "tasks":
+        state = "taskInDepth";
+        console.log("Je bent in de depth tasks");
+
+        animatingTasks = false;
+        animatingRotation = true;
+        break;
+
+      default:
+        break;
+    }
+  } else if (event.key === "ArrowLeft") {
+    switch (state) {
+      case "tasks":
+        state = "home";
+        animatingTasks = false;
+        animatingRotation = false;
+
+        targetPosition.set(0, 0, -1);
+        targetRotation.set(Math.PI / 4, Math.PI / -4, 0);
+
+        console.log("Je bent terug op de main");
+        break;
+
+      case "taskInDepth":
+        state = "tasks";
+        animatingTasks = true;
+        animatingRotation = true;
+
+        currentRotation.copy(cubeMesh.rotation);
+        targetPosition.set(0, 0, -6);
+        targetRotation.set(Math.PI / 2, Math.PI / 2, 0);
+
+        redLightIn = true;
+        greenLightIn = true;
+        blueLightIn = true;
+
+        console.log("Je bent weer terug op tasks");
+        break;
+
+      default:
+        break;
+    }
   }
 });
 
@@ -165,34 +232,67 @@ window.addEventListener("keydown", (event) => {
 let clock = new THREE.Clock();
 
 renderer.setAnimationLoop(() => {
-  // if (animatingTasks) {
-  //   const arcHeight = -2; // adjust height of the arc
+  let reversingTasks = false;
+
+  if (animatingTasks) {
+    reversingTasks = false; // Reset reversingTasks
   
-  //   // Animating taskOne
-  //   if (taskOne.position.z < 4) { // Change condition to check against 4
-  //     taskOne.position.z += animationSpeed;
+    const arcHeight = -2; // Adjust height of the arc
   
-  //     // Calculate the y position for the arc
-  //     const t = (taskOne.position.z - 4) / -20; // Normalize z to a 0-1 range
-  //     taskOne.position.y = -4 * arcHeight * t * (1 - t); // Quadratic curve formula
-  //   }
+    // Animating taskOne
+    if (taskOne.position.z < 4) { 
+      taskOne.position.z += animationSpeed;
   
-  //   // Animating taskTwo
-  //   if (taskTwo.position.z < 4) {
-  //     taskTwo.position.z += animationSpeed;
+      const t = (taskOne.position.z - 4) / -20;
+      taskOne.position.y = -4 * arcHeight * t * (1 - t);
+    }
   
-  //     const t = (taskTwo.position.z - 4) / -20;
-  //     taskTwo.position.y = -4 * arcHeight * t * (1 - t);
-  //   }
+    // Animating taskTwo
+    if (taskTwo.position.z < 4) {
+      taskTwo.position.z += animationSpeed;
   
-  //   // Animating taskThree
-  //   if (taskThree.position.z < 4) {
-  //     taskThree.position.z += animationSpeed;
+      const t = (taskTwo.position.z - 4) / -20;
+      taskTwo.position.y = -4 * arcHeight * t * (1 - t);
+    }
   
-  //     const t = (taskThree.position.z - 4) / -20;
-  //     taskThree.position.y = -4 * arcHeight * t * (1 - t);
-  //   }
-  // }
+    // Animating taskThree
+    if (taskThree.position.z < 4) {
+      taskThree.position.z += animationSpeed;
+  
+      const t = (taskThree.position.z - 4) / -20;
+      taskThree.position.y = -4 * arcHeight * t * (1 - t);
+    }
+  } else if (!animatingTasks && !reversingTasks) {
+    // Start reversing animation
+    reversingTasks = true;
+  
+    const arcHeight = -2; // Adjust height of the arc
+  
+    // Reversing taskOne
+    if (taskOne.position.z > -20) { 
+      taskOne.position.z -= animationSpeed;
+  
+      const t = (taskOne.position.z) / 20; // Normalize z back to 0-1 range
+      taskOne.position.y = -4 * arcHeight * t * (1 - t);
+    }
+  
+    // Reversing taskTwo
+    if (taskTwo.position.z > -20) {
+      taskTwo.position.z -= animationSpeed;
+  
+      const t = (taskTwo.position.z) / 20;
+      taskTwo.position.y = -4 * arcHeight * t * (1 - t);
+    }
+  
+    // Reversing taskThree
+    if (taskThree.position.z > -20) {
+      taskThree.position.z -= animationSpeed;
+  
+      const t = (taskThree.position.z) / 20;
+      taskThree.position.y = -4 * arcHeight * t * (1 - t);
+    }
+  }
+  
   
   
 
@@ -220,17 +320,17 @@ renderer.setAnimationLoop(() => {
     cubeMesh.rotation.y += 0.005;
   }
 
-  // if (redLightIn) {
-  //   redLight.intensity = 15;
-  // }
+  if (redLightIn) {
+    redLight.intensity = 15;
+  }
 
-  // if (greenLightIn) {
-  //   greenLight.intensity = 15;
-  // }
+  if (greenLightIn) {
+    greenLight.intensity = 15;
+  }
 
-  // if (blueLightIn) {
-  //   blueLighting.intensity = 15;
-  // }
+  if (blueLightIn) {
+    blueLighting.intensity = 15;
+  }
 
 
 

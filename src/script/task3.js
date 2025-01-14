@@ -13,18 +13,18 @@ export function task3() {
     // Draw on the canvas
     ctx.fillStyle = "#FFFFFF";
     ctx.beginPath();
-    ctx.moveTo(255, 30);
-    ctx.lineTo(275, 70);
-    ctx.lineTo(235, 70);
+    ctx.moveTo(268, 10);
+    ctx.lineTo(288, 50);
+    ctx.lineTo(248, 50);
     ctx.closePath();
     ctx.fill();
 
     ctx.fillStyle = "#FFFFFF";
-    ctx.fillRect(145, 52, 220, 50); // position x, y, width, height
+    ctx.fillRect(90, 35, 350, 60);
 
     ctx.fillStyle = "#000000";
-    ctx.font = "300 30px helvetica";
-    ctx.fillText("Nano Cleaning", 155, 88); // text, x = height, y = width
+    ctx.font = "300 50px helvetica";
+    ctx.fillText("Nano Cleaning", 100, 80);
 
     // Create sprite for the 2D element
     const texture = new THREE.CanvasTexture(canvas);

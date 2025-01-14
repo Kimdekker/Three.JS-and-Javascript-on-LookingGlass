@@ -2,10 +2,10 @@ import * as THREE from 'three';
 
 export function starBackground(scene, count = 100, areaSize = 5) {
     for (let i = 0; i < count; i++) {
-        const sphereSize = Math.random() * 0.05; // size for stars
+        const cubeSize = Math.random() * 0.09; // size for stars
 
         const star = new THREE.Mesh(
-            new THREE.SphereGeometry(sphereSize, 8, 8), // random size
+            new THREE.BoxGeometry(cubeSize, cubeSize, cubeSize), // random size for cubes
             new THREE.MeshBasicMaterial({ color: 0x4F4747 })
         );
 

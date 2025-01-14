@@ -13,18 +13,18 @@ export function task1() {
     // Draw on the canvas
     ctx.fillStyle = "#FFFFFF";
     ctx.beginPath();
-    ctx.moveTo(255, 30);
-    ctx.lineTo(275, 70);
-    ctx.lineTo(235, 70);
+    ctx.moveTo(242, 10);
+    ctx.lineTo(262, 50);
+    ctx.lineTo(222, 50);
     ctx.closePath();
     ctx.fill();
 
     ctx.fillStyle = "#FFFFFF";
-    ctx.fillRect(140, 52, 230, 50);
+    ctx.fillRect(60, 35, 370, 60);
 
     ctx.fillStyle = "#000000";
-    ctx.font = "300 30px helvetica";
-    ctx.fillText("Quantum Mech", 150, 88);
+    ctx.font = "300 50px helvetica";
+    ctx.fillText("Quantum Mech", 70, 80);
 
     // Create sprite for the 2D element
     const texture = new THREE.CanvasTexture(canvas);

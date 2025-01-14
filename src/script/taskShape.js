@@ -1,4 +1,6 @@
 import * as THREE from 'three';
+import { RoundedBoxGeometry } from 'three-stdlib';
+
 
 export function taskShape() {
     const textureLoader = new THREE.TextureLoader();
@@ -11,13 +13,13 @@ export function taskShape() {
         map: albedoMap,
         normalMap: normalMap,
         roughnessMap: roughnessMap,
-        roughness: 1,
+        roughness: 1.5,
         metalness: 1,
     });
 
-    const geometry = new THREE.OctahedronGeometry();
+    const geometry = new RoundedBoxGeometry(0.5, 0.5, 0.5, 10, 0.05);  // Size: 1x1x1, Segments, Radius
     const mesh = new THREE.Mesh(geometry, material);
-    mesh.scale.set(0.3, 0.5, 0.3); // Adjust scale
+    mesh.rotation.set(Math.PI / 4, Math.PI / -4, 0);
 
     return mesh;
 }
