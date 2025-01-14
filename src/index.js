@@ -66,11 +66,11 @@ const cubeMesh = cube();
 
 scene.add(cubeMesh);
 
-cubeMesh.position.set(0, 0, -3);
+cubeMesh.position.set(0, 0, -1);
 cubeMesh.rotation.set(Math.PI / 4, Math.PI / -4, 0);
 
 // Default target position and rotation for animation of the cube going backwards
-let targetPosition = new THREE.Vector3(0, 0, -3); 
+let targetPosition = new THREE.Vector3(0, 0, -1); 
 let targetRotation = new THREE.Euler(Math.PI / 4, Math.PI / -4, 0);
 let currentRotation = new THREE.Euler();
 
@@ -87,43 +87,60 @@ starBackground(scene, 100, 5); // Adjust count and areaSize
 // ****TASKS*************************************
 
 
+const taskTest = task1();
+scene.add(taskTest);
+taskTest.position.set(-1, 0, 0);
+
+const testLight = new THREE.PointLight(0xff0000, 15, 3);
+testLight.position.set(-2, 0, 2);
+scene.add(testLight);
+
 // Task 1 with Red Light
-const taskOne = task1();
-scene.add(taskOne);
-taskOne.position.set(-1, 0, 0);
+// const taskOne = task1();
+// scene.add(taskOne);
+// taskOne.position.set(-1, 0, 10);
 
-const redLight = new THREE.PointLight(0xff0000, 15, 3);
-redLight.position.set(-2, 0, 2);
-scene.add(redLight);
+// const redLight = new THREE.PointLight(0xff0000, 15, 3);
+// redLight.position.set(-2, 0, 6);
+// redLight.intensity = 0;
+// scene.add(redLight);
 
-taskOne.position.z = -20;
+// let redLightIn = false
 
-// Task 2 with Green Light
-const taskTwo = task2();
-scene.add(taskTwo);
-taskTwo.position.set(0, 0, 0);
+// taskOne.position.z = -20;
 
-const greenLight = new THREE.PointLight(0x00ff00, 20, 1.2);
-greenLight.position.set(0, 0, 1);
-scene.add(greenLight);
+// // Task 2 with Green Light
+// const taskTwo = task2();
+// scene.add(taskTwo);
+// taskTwo.position.set(0, 0, 10);
 
-taskTwo.position.z = -20;
+// const greenLight = new THREE.PointLight(0x00ff00, 20, 1.2);
+// greenLight.position.set(0, 0, 5);
+// greenLight.intensity = 0;
+// scene.add(greenLight);
+
+// let greenLightIn = false
+
+// taskTwo.position.z = -20;
 
 
-// Task 3 with Blue Light
-const taskThree = task3();
-scene.add(taskThree);
-taskThree.position.set(1, 0, 0);
+// // Task 3 with Blue Light
+// const taskThree = task3();
+// scene.add(taskThree);
+// taskThree.position.set(1, 0, 10);
 
-const blueLighting = new THREE.PointLight(0x0000ff, 15, 3);
-blueLighting.position.set(2, 0, 2);
-scene.add(blueLighting);
+// const blueLighting = new THREE.PointLight(0x0000ff, 15, 3);
+// blueLighting.position.set(2, 0, 6);
+// blueLighting.intensity = 0;
+// scene.add(blueLighting);
 
-taskThree.position.z = -20;
+// let blueLightIn = false
+
+// taskThree.position.z = -20;
 
 // Animeren van achter naar voor als klik op h
 
-let animationSpeed = 0.1;
+let animationSpeed = 0.5;
 let animatingTasks = false;
 
 window.addEventListener("keydown", (event) => {
@@ -136,6 +153,10 @@ window.addEventListener("keydown", (event) => {
     targetPosition.set(0, 0, -6);
     targetRotation.set(Math.PI / 2, Math.PI / 2, 0);
 
+    // redLightIn = true;
+    // greenLightIn = true;
+    // blueLightIn = true;
+
   }
 });
 
@@ -144,47 +165,48 @@ window.addEventListener("keydown", (event) => {
 let clock = new THREE.Clock();
 
 renderer.setAnimationLoop(() => {
-  if (animatingTasks) {
-    const arcHeight = -4; // adjust height of the arc
-    
-    // Animating taskOne
-    if (taskOne.position.z < 0) {
-      taskOne.position.z += animationSpeed;
+  // if (animatingTasks) {
+  //   const arcHeight = -2; // adjust height of the arc
   
-      // Calculate the y position for the arc
-      const t = taskOne.position.z / -20; // Normalize z to a 0-1 range
-      taskOne.position.y = -4 * arcHeight * t * (1 - t); // Quadratic curve formula
-    }
+  //   // Animating taskOne
+  //   if (taskOne.position.z < 4) { // Change condition to check against 4
+  //     taskOne.position.z += animationSpeed;
   
-    // Animating taskTwo
-    if (taskTwo.position.z < 0) {
-      taskTwo.position.z += animationSpeed;
+  //     // Calculate the y position for the arc
+  //     const t = (taskOne.position.z - 4) / -20; // Normalize z to a 0-1 range
+  //     taskOne.position.y = -4 * arcHeight * t * (1 - t); // Quadratic curve formula
+  //   }
   
-      const t = taskTwo.position.z / -20;
-      taskTwo.position.y = -4 * arcHeight * t * (1 - t);
-    }
+  //   // Animating taskTwo
+  //   if (taskTwo.position.z < 4) {
+  //     taskTwo.position.z += animationSpeed;
   
-    // Animating taskThree
-    if (taskThree.position.z < 0) {
-      taskThree.position.z += animationSpeed;
+  //     const t = (taskTwo.position.z - 4) / -20;
+  //     taskTwo.position.y = -4 * arcHeight * t * (1 - t);
+  //   }
   
-      const t = taskThree.position.z / -20;
-      taskThree.position.y = -4 * arcHeight * t * (1 - t);
-
-    }
-  }
+  //   // Animating taskThree
+  //   if (taskThree.position.z < 4) {
+  //     taskThree.position.z += animationSpeed;
+  
+  //     const t = (taskThree.position.z - 4) / -20;
+  //     taskThree.position.y = -4 * arcHeight * t * (1 - t);
+  //   }
+  // }
+  
+  
 
 
   // cube mesh animation backwards
 
-  cubeMesh.position.lerp(targetPosition, 0.02); // Adjust the speed for position
+  cubeMesh.position.lerp(targetPosition, 0.1); // Adjust the speed for position
 
     // Animate rotation to targetRotation
     if (animatingRotation) {
       const targetQuat = new THREE.Quaternion().setFromEuler(targetRotation);
   
       // Slerp between the current and target quaternions
-      cubeMesh.quaternion.slerp(targetQuat, 0.02); // Adjust speed
+      cubeMesh.quaternion.slerp(targetQuat, 0.1); // Adjust speed
   
       // Check if rotation is close to target to stop animating
       if (cubeMesh.quaternion.angleTo(targetQuat) < 0.01) {
@@ -194,19 +216,33 @@ renderer.setAnimationLoop(() => {
     }
 
   if (animateRotatingCube) {
-    cubeMesh.rotation.x += 0.003;
-    cubeMesh.rotation.y += 0.003;
+    cubeMesh.rotation.x += 0.005;
+    cubeMesh.rotation.y += 0.005;
   }
+
+  // if (redLightIn) {
+  //   redLight.intensity = 15;
+  // }
+
+  // if (greenLightIn) {
+  //   greenLight.intensity = 15;
+  // }
+
+  // if (blueLightIn) {
+  //   blueLighting.intensity = 15;
+  // }
+
+
 
   // Hover effect for cubeMesh
   let time = clock.getElapsedTime(); // Get the elapsed time
   cubeMesh.position.y = Math.sin(time * 2) * 0.1; // Oscillate up and down
 
-  taskOne.rotation.y += 0.01;
+  // taskOne.rotation.y += 0.01;
 
-  taskTwo.rotation.y += 0.01;
+  // taskTwo.rotation.y += 0.01;
 
-  taskThree.rotation.y += 0.01;
+  // taskThree.rotation.y += 0.01;
 
 
 
