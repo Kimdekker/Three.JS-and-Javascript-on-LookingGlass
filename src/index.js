@@ -61,16 +61,21 @@ scene.add(backLightTw);
 
 // ****CUBE*************************************
 
-
-const cubeMesh = cube();
-
+const cubeMesh = cube(2);
 scene.add(cubeMesh);
+
+const secondCube = cube(1);
+secondCube.position.set(0, -1, -1);
+secondCube.rotation.set(Math.PI / 4, Math.PI / -4, 0);
+scene.add(secondCube);
 
 cubeMesh.position.set(0, 0, -1);
 cubeMesh.rotation.set(Math.PI / 4, Math.PI / -4, 0);
 
 // Default target position and rotation for animation of the cube going backwards
 let targetPosition = new THREE.Vector3(0, 0, -1); 
+let targetPositionSecond = new THREE.Vector3(0, 0, -1); 
+
 let targetRotation = new THREE.Euler(Math.PI / 4, Math.PI / -4, 0);
 let currentRotation = new THREE.Euler();
 
@@ -79,9 +84,9 @@ let animatingRotation = false;
 let animateRotatingCube = true;
 
 
-const secondCube = cubeMesh.clone();
-secondCube.position.set(0, 0, -1);
-scene.add(secondCube);
+
+
+
 
 
 // ****STARS*************************************
@@ -168,6 +173,11 @@ window.addEventListener("keydown", (event) => {
 
         animatingTasks = false;
         animatingRotation = true;
+
+        targetRotation.set(Math.PI / 4, Math.PI / 4, Math.PI / 2); // 45 degrees in radians
+        targetPosition.set(0, 0, -10);
+
+
         break;
 
       default:
@@ -315,6 +325,31 @@ renderer.setAnimationLoop(() => {
     cubeMesh.rotation.x += 0.005;
     cubeMesh.rotation.y += 0.005;
   }
+
+
+
+  secondCube.position.lerp(targetPositionSecond, 0.1); // Adjust the speed for position
+  
+  // Animate rotation to targetRotation
+  if (animatingRotation) {
+    const targetQuat = new THREE.Quaternion().setFromEuler(targetRotation);
+
+    // Slerp between the current and target quaternions
+    secondCube.quaternion.slerp(targetQuat, 0.1); // Adjust speed
+
+    // Check if rotation is close to target to stop animating
+    if (secondCube.quaternion.angleTo(targetQuat) < 0.01) {
+      animatingRotation = false;
+      animateRotatingCube = false;
+    }
+  }
+
+if (animateRotatingCube) {
+  secondCube.rotation.x += 0.005;
+  secondCube.rotation.y += 0.005;
+}
+
+
 
   if (redLightIn) {
     redLight.intensity = 15;

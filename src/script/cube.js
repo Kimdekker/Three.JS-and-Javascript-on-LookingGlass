@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { RoundedBoxGeometry } from 'three-stdlib';
 
-export function cube() {
+export function cube(cubeSize = 2) {
 
     const textureLoader = new THREE.TextureLoader();
 
@@ -26,7 +26,7 @@ export function cube() {
     });
 
     // Create the geometry and mesh
-    const geometry = new RoundedBoxGeometry(2, 2, 2, 10, 0.09);  // Size: 1x1x1, Segments, Radius
+    const geometry = new RoundedBoxGeometry(cubeSize, cubeSize, cubeSize, 10, 0.09);  // Size: 1x1x1, Segments, Radius
     const cube = new THREE.Mesh(geometry, material);
 
     return cube;
