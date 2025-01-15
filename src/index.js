@@ -79,39 +79,19 @@ let animatingRotation = false;
 let animateRotatingCube = true;
 
 
+const secondCube = cubeMesh.clone();
+secondCube.position.set(0, 0, -1);
+scene.add(secondCube);
+
+
 // ****STARS*************************************
 
-starBackground(scene, 100, 5); // Adjust count and areaSize
+starBackground(scene, 100, 6); // Adjust count and areaSize
 
 
 
 // ****TASKS*************************************
 
-
-// const taskTest = task1();
-// scene.add(taskTest);
-// taskTest.position.set(-1, 0, 0);
-
-// const testLight = new THREE.PointLight(0xff0000, 15, 3);
-// testLight.position.set(-1, 0, 2);
-// scene.add(testLight);
-
-// const taskTest2 = task2();
-// scene.add(taskTest2);
-// taskTest2.position.set(0, 0, 0);
-
-// const testLight2 = new THREE.PointLight(0x00ff00, 15, 3);
-// testLight2.position.set(0, 0, 2);
-// scene.add(testLight2);
-
-
-// const taskTest3 = task3();
-// scene.add(taskTest3);
-// taskTest3.position.set(1, 0, 0);
-
-// const testLight3 = new THREE.PointLight(0x0000ff, 15, 3);
-// testLight3.position.set(1, 0, 2);
-// scene.add(testLight3);
 
 // Task 1 with Red Light
 const taskOne = task1();
@@ -157,10 +137,11 @@ let blueLightIn = false
 taskThree.position.z = -20;
 
 
-let animationSpeed = 0.5;
+let animationSpeed = 3; // snelheid van de tasks die in en uitvliegen. Hoe hoger hoe sneller.
 let animatingTasks = false;
 
-let state = "home"; // Mogelijke states: "home", "tasks", "taskInDepth"
+let state = "home";
+
 
 window.addEventListener("keydown", (event) => {
   if (event.key === "ArrowRight") {
@@ -234,64 +215,79 @@ let clock = new THREE.Clock();
 renderer.setAnimationLoop(() => {
   let reversingTasks = false;
 
+  // Easier-to-compute easing function
+  const easeInOutQuad = t => t < 0.5 ? 2 * t * t : 1 - 2 * (1 - t) * (1 - t);
+
   if (animatingTasks) {
     reversingTasks = false; // Reset reversingTasks
   
     const arcHeight = -2; // Adjust height of the arc
   
     // Animating taskOne
-    if (taskOne.position.z < 4) { 
+    if (taskOne.position.z < 4) {
       taskOne.position.z += animationSpeed;
-  
-      const t = (taskOne.position.z - 4) / -20;
+      
+      const t = easeInOutQuad((taskOne.position.z - 4) / -20);
       taskOne.position.y = -4 * arcHeight * t * (1 - t);
     }
   
     // Animating taskTwo
-    if (taskTwo.position.z < 4) {
-      taskTwo.position.z += animationSpeed;
-  
-      const t = (taskTwo.position.z - 4) / -20;
-      taskTwo.position.y = -4 * arcHeight * t * (1 - t);
-    }
+    setTimeout(() => {
+      if (taskTwo.position.z < 4) {
+        taskTwo.position.z += animationSpeed;
+    
+        const t = easeInOutQuad((taskTwo.position.z - 4) / -20);
+        taskTwo.position.y = -4 * arcHeight * t * (1 - t);
+      }
+    }, 100);
+
   
     // Animating taskThree
-    if (taskThree.position.z < 4) {
+    setTimeout(() => {
+      if (taskThree.position.z < 4) {
       taskThree.position.z += animationSpeed;
   
-      const t = (taskThree.position.z - 4) / -20;
+      const t = easeInOutQuad((taskThree.position.z - 4) / -20);
       taskThree.position.y = -4 * arcHeight * t * (1 - t);
-    }
+      }
+    }, 200);
+
   } else if (!animatingTasks && !reversingTasks) {
-    // Start reversing animation
     reversingTasks = true;
   
     const arcHeight = -2; // Adjust height of the arc
   
     // Reversing taskOne
-    if (taskOne.position.z > -20) { 
+
+
+    if (taskOne.position.z > -20) {
       taskOne.position.z -= animationSpeed;
   
-      const t = (taskOne.position.z) / 20; // Normalize z back to 0-1 range
+      const t = easeInOutQuad(taskOne.position.z / 20);
       taskOne.position.y = -4 * arcHeight * t * (1 - t);
     }
   
     // Reversing taskTwo
-    if (taskTwo.position.z > -20) {
-      taskTwo.position.z -= animationSpeed;
-  
-      const t = (taskTwo.position.z) / 20;
-      taskTwo.position.y = -4 * arcHeight * t * (1 - t);
-    }
+    setTimeout(() => {
+      if (taskTwo.position.z > -20) {
+        taskTwo.position.z -= animationSpeed;
+    
+        const t = easeInOutQuad(taskTwo.position.z / 20);
+        taskTwo.position.y = -4 * arcHeight * t * (1 - t);
+      }
+    }, 100);
   
     // Reversing taskThree
+    setTimeout(() => {
     if (taskThree.position.z > -20) {
       taskThree.position.z -= animationSpeed;
   
-      const t = (taskThree.position.z) / 20;
+      const t = easeInOutQuad(taskThree.position.z / 20);
       taskThree.position.y = -4 * arcHeight * t * (1 - t);
     }
+    }, 200);
   }
+  
   
   
   
@@ -338,11 +334,11 @@ renderer.setAnimationLoop(() => {
   let time = clock.getElapsedTime(); // Get the elapsed time
   cubeMesh.position.y = Math.sin(time * 2) * 0.1; // Oscillate up and down
 
-  // taskOne.rotation.y += 0.01;
+  taskOne.rotation.y += 0.01;
 
-  // taskTwo.rotation.y += 0.01;
+  taskTwo.rotation.y += 0.01;
 
-  // taskThree.rotation.y += 0.01;
+  taskThree.rotation.y += 0.01;
 
 
 
