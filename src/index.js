@@ -116,10 +116,8 @@ taskOne.position.set(-1, 0, 10);
 
 const redLight = new THREE.PointLight(0xff0000, 15, 3);
 redLight.position.set(-2, 0, 6);
-redLight.intensity = 0;
 scene.add(redLight);
 
-let redLightIn = false
 
 taskOne.position.z = -20;
 
@@ -172,22 +170,16 @@ window.addEventListener("keydown", (event) => {
         targetPositionSecond.set(0, 0, -6);
         targetRotation.set(Math.PI / 2, Math.PI / 2, 0);
 
-        redLightIn = true;
-        greenLightIn = true;
-        blueLightIn = true;
-
-        console.log("Je bent op de tasks");
         break;
 
       case "tasks":
         state = "taskInDepth";
-        console.log("Je bent in de depth tasks");
 
         animatingTasks = false;
         animatingRotation = true;
 
         targetRotation.set(Math.PI / 4, Math.PI / 4, Math.PI / 2); // 45 degrees in radians
-        targetPosition.set(-.2, 3.2, -10);
+        targetPosition.set(-.2, 3.3, -10);
 
         targetPositionSecond.set(0, 0, -3);
 
@@ -211,7 +203,6 @@ window.addEventListener("keydown", (event) => {
         targetPosition.set(0, 0, -1);
         targetRotation.set(Math.PI / 4, Math.PI / -4, 0);
 
-        console.log("Je bent terug op de main");
         break;
 
       case "taskInDepth":
@@ -224,16 +215,11 @@ window.addEventListener("keydown", (event) => {
         targetPositionSecond.set(0, 0, -6);
         targetRotation.set(Math.PI / 2, Math.PI / 2, 0);
 
-        redLightIn = true;
-        greenLightIn = true;
-        blueLightIn = true;
-
         updateCubeColor(0x0051FF);
         cubeMesh.updateSize(2);
-        secondCube.updateSize(1);
+        secondCube.updateSize(1.5);
 
 
-        console.log("Je bent weer terug op tasks");
         break;
 
       default:
@@ -372,20 +358,6 @@ if (animateRotatingCube) {
   secondCube.rotation.x += 0.005;
   secondCube.rotation.y += 0.005;
 }
-
-
-
-  if (redLightIn) {
-    redLight.intensity = 15;
-  }
-
-  if (greenLightIn) {
-    greenLight.intensity = 15;
-  }
-
-  if (blueLightIn) {
-    blueLighting.intensity = 15;
-  }
 
 
   // Hover effect for cubeMesh
