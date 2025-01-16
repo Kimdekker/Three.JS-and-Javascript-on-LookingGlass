@@ -84,6 +84,8 @@ let targetPosition = new THREE.Vector3(0, 0, -1);
 let targetPositionSecond = new THREE.Vector3(0, 0, -1); 
 
 let targetRotation = new THREE.Euler(Math.PI / 4, Math.PI / -4, 0);
+let targetRotationSecond = new THREE.Euler(Math.PI / 4, Math.PI / -4, 0);
+
 let currentRotation = new THREE.Euler();
 
 
@@ -154,8 +156,10 @@ taskThree.position.z = -20;
 let animationSpeed = 3; // snelheid van de tasks die in en uitvliegen. Hoe hoger hoe sneller.
 let animatingTasks = false;
 
-let state = "home";
 
+// ****INPUTS*************************************************************************************************
+
+let state = "home";
 
 window.addEventListener("keydown", (event) => {
   if (event.key === "ArrowRight") {
@@ -165,20 +169,27 @@ window.addEventListener("keydown", (event) => {
         animatingTasks = true;
         animatingRotation = true;
 
-        currentRotation.copy(cubeMesh.rotation);
         targetPosition.set(0, 0, -6);
         targetPositionSecond.set(0, 0, -6);
+
+        currentRotation.copy(cubeMesh.rotation);
         targetRotation.set(Math.PI / 2, Math.PI / 2, 0);
+        targetRotationSecond.set(Math.PI / 2, Math.PI / 2, 0);
 
         break;
 
       case "tasks":
         state = "taskInDepth";
-
         animatingTasks = false;
         animatingRotation = true;
 
-        targetRotation.set(Math.PI / 4, Math.PI / 4, Math.PI / 2); // 45 degrees in radians
+        targetRotation.set(Math.PI / 4, Math.PI / 4, Math.PI / 2);
+        targetRotationSecond.set(Math.PI / 4, Math.PI / 4, Math.PI / 2);
+
+        setTimeout(() => {
+          targetRotationSecond.set(Math.PI / 2, Math.PI / 2, 0);
+        }, 1000);
+
         targetPosition.set(-.2, 3.3, -10);
 
         targetPositionSecond.set(0, 0, -3);
@@ -201,7 +212,9 @@ window.addEventListener("keydown", (event) => {
         animatingRotation = false;
 
         targetPosition.set(0, 0, -1);
+
         targetRotation.set(Math.PI / 4, Math.PI / -4, 0);
+        targetRotationSecond.set(Math.PI / 4, Math.PI / -4, 0);
 
         break;
 
@@ -210,10 +223,12 @@ window.addEventListener("keydown", (event) => {
         animatingTasks = true;
         animatingRotation = true;
 
-        currentRotation.copy(cubeMesh.rotation);
         targetPosition.set(0, 0, -6);
         targetPositionSecond.set(0, 0, -6);
+
+        currentRotation.copy(cubeMesh.rotation);
         targetRotation.set(Math.PI / 2, Math.PI / 2, 0);
+        targetRotationSecond.set(Math.PI / 2, Math.PI / 2, 0);
 
         updateCubeColor(0x0051FF);
         cubeMesh.updateSize(2);
@@ -331,6 +346,7 @@ renderer.setAnimationLoop(() => {
       }
     }
 
+
   if (animateRotatingCube) {
     cubeMesh.rotation.x += 0.005;
     cubeMesh.rotation.y += 0.005;
@@ -342,7 +358,7 @@ renderer.setAnimationLoop(() => {
   
   // Animate rotation to targetRotation
   if (animatingRotation) {
-    const targetQuat = new THREE.Quaternion().setFromEuler(targetRotation);
+    const targetQuat = new THREE.Quaternion().setFromEuler(targetRotationSecond);
 
     // Slerp between the current and target quaternions
     secondCube.quaternion.slerp(targetQuat, 0.1); // Adjust speed
@@ -354,10 +370,10 @@ renderer.setAnimationLoop(() => {
     }
   }
 
-if (animateRotatingCube) {
-  secondCube.rotation.x += 0.005;
-  secondCube.rotation.y += 0.005;
-}
+  if (animateRotatingCube) {
+    secondCube.rotation.x += 0.005;
+    secondCube.rotation.y += 0.005;
+  }
 
 
   // Hover effect for cubeMesh
