@@ -187,7 +187,7 @@ window.addEventListener("keydown", (event) => {
         targetRotationSecond.set(Math.PI / 4, Math.PI / 4, Math.PI / 2);
 
         setTimeout(() => {
-          targetRotationSecond.set(Math.PI / 2, Math.PI / 2, 0);
+          targetRotationSecond.set(Math.PI / 2, Math.PI / 2, Math.PI / 2);
         }, 1000);
 
         targetPosition.set(-.2, 3.3, -10);
