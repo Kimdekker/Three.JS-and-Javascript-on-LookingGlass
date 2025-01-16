@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { RoundedBoxGeometry } from 'three-stdlib';
 
-export function cube(cubeSize = 2) {
+export function cube(cubeSize = 2, color = 0x0051FF) {
 
     const textureLoader = new THREE.TextureLoader();
 
@@ -21,7 +21,7 @@ export function cube(cubeSize = 2) {
         aoMap: aoMap,                // Ambient occlusion
         aoMapIntensity: 1.0,         // AO intensity
 
-        emissive: new THREE.Color(0x0051FF), // Neon purple color
+        emissive: new THREE.Color(color), // Neon purple color
         emissiveIntensity: 0.3, // Intensity of the glow effect
     });
 

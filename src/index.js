@@ -56,21 +56,28 @@ scene.add(backLightTw);
 
 
 
+
+
 // ****ALLE OBJECTEN IN HET CANVAS*******************************************************************************************************************************************************
 
 
 // ****CUBE*************************************
 
-const cubeMesh = cube(2);
+let cubeColor = 0x0051FF;
+let cubeSize = 2;
+
+
+const cubeMesh = cube(cubeSize, cubeColor);
+cubeMesh.position.set(0, 0, -1);
+cubeMesh.rotation.set(Math.PI / 4, Math.PI / -4, 0);
 scene.add(cubeMesh);
 
-const secondCube = cube(1);
+const secondCube = cube(cubeSize);
 secondCube.position.set(0, -1, -1);
 secondCube.rotation.set(Math.PI / 4, Math.PI / -4, 0);
 scene.add(secondCube);
 
-cubeMesh.position.set(0, 0, -1);
-cubeMesh.rotation.set(Math.PI / 4, Math.PI / -4, 0);
+
 
 // Default target position and rotation for animation of the cube going backwards
 let targetPosition = new THREE.Vector3(0, 0, -1); 
@@ -84,6 +91,10 @@ let animatingRotation = false;
 let animateRotatingCube = true;
 
 
+const updateCubeColor = (newColor) => {
+  cubeColor = newColor;
+  cubeMesh.material.emissive.set(new THREE.Color(cubeColor));
+};
 
 
 
@@ -158,6 +169,7 @@ window.addEventListener("keydown", (event) => {
 
         currentRotation.copy(cubeMesh.rotation);
         targetPosition.set(0, 0, -6);
+        targetPositionSecond.set(0, 0, -6);
         targetRotation.set(Math.PI / 2, Math.PI / 2, 0);
 
         redLightIn = true;
@@ -175,7 +187,13 @@ window.addEventListener("keydown", (event) => {
         animatingRotation = true;
 
         targetRotation.set(Math.PI / 4, Math.PI / 4, Math.PI / 2); // 45 degrees in radians
-        targetPosition.set(0, 0, -10);
+        targetPosition.set(-.2, 3.2, -10);
+
+        targetPositionSecond.set(0, 0, -3);
+
+        updateCubeColor(0x808080);
+        cubeMesh.updateSize(1);
+        secondCube.updateSize(1.5);
 
 
         break;
@@ -203,11 +221,17 @@ window.addEventListener("keydown", (event) => {
 
         currentRotation.copy(cubeMesh.rotation);
         targetPosition.set(0, 0, -6);
+        targetPositionSecond.set(0, 0, -6);
         targetRotation.set(Math.PI / 2, Math.PI / 2, 0);
 
         redLightIn = true;
         greenLightIn = true;
         blueLightIn = true;
+
+        updateCubeColor(0x0051FF);
+        cubeMesh.updateSize(2);
+        secondCube.updateSize(1);
+
 
         console.log("Je bent weer terug op tasks");
         break;
@@ -364,10 +388,14 @@ if (animateRotatingCube) {
   }
 
 
-
   // Hover effect for cubeMesh
   let time = clock.getElapsedTime(); // Get the elapsed time
-  cubeMesh.position.y = Math.sin(time * 2) * 0.1; // Oscillate up and down
+
+  if (targetPosition.z == -1) {
+    cubeMesh.position.y = Math.sin(time * 2) * 0.1;
+    secondCube.position.y = Math.sin(time * 2) * 0.1;
+  }
+
 
   taskOne.rotation.y += 0.01;
 
