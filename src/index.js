@@ -11,6 +11,7 @@ import { starBackground } from "./script/starBackground.js";
 import { task1 } from "./script/task1.js";
 import { task2 } from "./script/task2.js";
 import { task3 } from "./script/task3.js";
+import { taskData } from "./script/taskData.js";
 
 
 
@@ -78,7 +79,6 @@ secondCube.rotation.set(Math.PI / 4, Math.PI / -4, 0);
 scene.add(secondCube);
 
 
-
 // Default target position and rotation for animation of the cube going backwards
 let targetPosition = new THREE.Vector3(0, 0, -1); 
 let targetPositionSecond = new THREE.Vector3(0, 0, -1); 
@@ -91,7 +91,6 @@ let currentRotation = new THREE.Euler();
 
 let animatingRotation = false;
 let animateRotatingCube = true;
-
 
 const updateCubeColor = (newColor) => {
   cubeColor = newColor;
@@ -155,6 +154,12 @@ taskThree.position.z = -20;
 
 let animationSpeed = 3; // snelheid van de tasks die in en uitvliegen. Hoe hoger hoe sneller.
 let animatingTasks = false;
+
+
+// ****Task in depth data*************************************
+
+const canvasInDepth = taskData();
+scene.add(canvasInDepth);
 
 
 // ****INPUTS*************************************************************************************************
