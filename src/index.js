@@ -183,16 +183,15 @@ window.addEventListener("keydown", (event) => {
         animatingTasks = false;
         animatingRotation = true;
 
+        targetPosition.set(.1, -3.5, -10);
+        targetPositionSecond.set(0, 0, -3);
+
         targetRotation.set(Math.PI / 4, Math.PI / 4, Math.PI / 2);
         targetRotationSecond.set(Math.PI / 4, Math.PI / 4, Math.PI / 2);
 
         setTimeout(() => {
           targetRotationSecond.set(Math.PI / 2, Math.PI / 2, Math.PI / 2);
         }, 1000);
-
-        targetPosition.set(-.2, 3.3, -10);
-
-        targetPositionSecond.set(0, 0, -3);
 
         updateCubeColor(0x808080);
         cubeMesh.updateSize(1);
@@ -222,6 +221,7 @@ window.addEventListener("keydown", (event) => {
         state = "tasks";
         animatingTasks = true;
         animatingRotation = true;
+        animateRotatingCube = true;
 
         targetPosition.set(0, 0, -6);
         targetPositionSecond.set(0, 0, -6);
