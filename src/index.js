@@ -132,10 +132,7 @@ taskTwo.scale.set(0, 0, 0);
 
 const greenLight = new THREE.PointLight(0x00ff00, 20, 1.2);
 greenLight.position.set(0, 0, 5);
-greenLight.intensity = 0;
 scene.add(greenLight);
-
-let greenLightIn = false
 
 taskTwo.position.z = -20;
 
@@ -147,11 +144,9 @@ taskThree.position.set(1.5, 0, 10);
 taskThree.scale.set(0, 0, 0);
 
 const blueLighting = new THREE.PointLight(0x0000ff, 15, 3);
-blueLighting.position.set(2.5, 0, 6);
-blueLighting.intensity = 0;
+blueLighting.position.set(1.5, 0, 6);
 scene.add(blueLighting);
 
-let blueLightIn = false
 
 taskThree.position.z = -20;
 
@@ -163,7 +158,7 @@ let animatingTasks = false;
 // ****Task in depth data*************************************
 
 const canvasInDepth = taskInDepth();
-canvasInDepth.position.set(0, 0.65, 0);
+canvasInDepth.position.set(0, -5, 0);
 scene.add(canvasInDepth);
 canvasInDepth.scale.set(0, 0, 0);
 
@@ -177,6 +172,32 @@ buttonPlaying.scale.set(0, 0, 0);
 buttonPlaying.position.z = -10;
 
 let animatingTaskInDepth = false;
+
+
+
+
+// ****ranking************************************************
+
+let orangeLighting; // Declare the light variable outside the function
+
+function updateLighting(state) {
+  // Remove the previous light if it exists
+  if (orangeLighting) {
+    scene.remove(orangeLighting);
+    orangeLighting.dispose(); // Optional: Free up resources
+  }
+
+  // Add the new light based on the current state
+  if (state === "ranking") {
+    orangeLighting = new THREE.PointLight(0xFF4D00, 2, 3);
+    orangeLighting.position.set(0.5, 0.5, -2);
+    scene.add(orangeLighting);
+  } else if (state === "home" || state === "tasks" || state === "taskInDepth") {
+    orangeLighting = new THREE.PointLight(0x000000, 0, 0);
+    orangeLighting.position.set(0.5, 0.5, -2);
+    scene.add(orangeLighting);
+  }
+}
 
 
 
@@ -213,15 +234,11 @@ window.addEventListener("keydown", (event) => {
         animatingRotation = true;
         animatingTaskInDepth = true;
 
-        targetPosition.set(.1, -3.5, -10);
+        targetPosition.set(.1, -1.5, -10);
         targetPositionSecond.set(0, 0, -3);
 
         targetRotation.set(Math.PI / 4, Math.PI / 4, Math.PI / 2);
         targetRotationSecond.set(Math.PI / 4, Math.PI / 4, Math.PI / 2);
-
-        setTimeout(() => {
-          targetRotationSecond.set(Math.PI / 2, Math.PI / 2, Math.PI / 2);
-        }, 1000);
 
         updateCubeColor(0x808080);
         cubeMesh.updateSize(1);
@@ -230,10 +247,12 @@ window.addEventListener("keydown", (event) => {
         buttonPlaying.scale.set(1, 0.5, 1);
         canvasInDepth.scale.set(1, 1, 1);
 
+        canvasInDepth.position.set(0, 0.5, 4);
 
         setTimeout(() => {
-          buttonPlaying.position.z = 0;
-        }, 1000);
+          targetRotationSecond.set(Math.PI / 2, Math.PI / 2, Math.PI / 2);
+          buttonPlaying.position.z = 4;
+        }, 8000);
 
         setTimeout(() => {
           taskOne.scale.set(0, 0, 0);
@@ -272,6 +291,9 @@ window.addEventListener("keydown", (event) => {
 
       case "taskInDepth":
         state = "tasks";
+        taskOne.scale.set(1, 1, 1);
+        taskTwo.scale.set(1, 1, 1);
+        taskThree.scale.set(1, 1, 1);
         animatingTasks = true;
         animatingRotation = true;
         animateRotatingCube = true;
@@ -296,6 +318,44 @@ window.addEventListener("keydown", (event) => {
         }, 400);
 
 
+
+        break;
+
+        case "ranking":
+          state = "home";
+          animatingRotation = false;
+  
+          targetPosition.set(0, 0, -1);
+          targetPositionSecond.set(0, 0, -4);
+  
+          targetRotation.set(Math.PI / 2, Math.PI / 2, 0);
+          targetRotationSecond.set(Math.PI / 2, Math.PI / 2, 0);
+  
+          updateCubeColor(0x0051FF);
+
+          updateLighting("home");
+  
+          break;
+
+      default:
+        break;
+    }
+  } else if (event.key === "ArrowUp") {
+    switch (state) {
+      case "home":
+        state = "ranking";
+        animatingRotation = true;
+
+        targetPosition.set(0, 0, -4);
+        targetPositionSecond.set(0, 0, -4);
+
+        targetRotation.set(Math.PI / 2, Math.PI / 2, 0);
+        targetRotationSecond.set(Math.PI / 2, Math.PI / 2, 0);
+
+        updateCubeColor(0xFF4D00);
+        secondCube.updateSize(1.5);
+
+        updateLighting("ranking");
 
         break;
 
