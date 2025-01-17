@@ -222,6 +222,8 @@ scene.add(moreCube);
 lessCube.updateSize(0);
 moreCube.updateSize(0);
 
+let animatingRanking = false;
+
 
 
 
@@ -361,6 +363,8 @@ window.addEventListener("keydown", (event) => {
 
           lessCube.updateSize(0);
           moreCube.updateSize(0);
+
+          animatingRanking = false;
   
           break;
 
@@ -386,6 +390,8 @@ window.addEventListener("keydown", (event) => {
 
         lessCube.updateSize(0.5);
         moreCube.updateSize(1.8);
+
+        animatingRanking = true;
 
         break;
 
@@ -559,6 +565,34 @@ renderer.setAnimationLoop(() => {
     }
 
   }
+
+
+
+  let reversingRanking = false;
+
+  if (animatingRanking) {
+    reversingRanking = false;
+  
+    if (lessCube.position.z < 0) {
+      lessCube.position.z += animationSpeed;
+    }
+  
+    if (moreCube.position.z < -5) {
+      moreCube.position.z += animationSpeed;
+    }
+  
+  } else if (!animatingRanking && !reversingRanking) {
+    reversingRanking = true;
+  
+    if (lessCube.position.z > -20) {
+      lessCube.position.z -= animationSpeed;
+    }
+  
+    if (moreCube.position.z > -20) {
+      moreCube.position.z -= animationSpeed;
+    }
+  }
+  
   
   
   
