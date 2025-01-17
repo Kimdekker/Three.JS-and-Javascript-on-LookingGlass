@@ -574,14 +574,18 @@ renderer.setAnimationLoop(() => {
 
   if (animatingRanking) {
     reversingRanking = false;
+
+
   
     if (lessCube.position.z < 0) {
       lessCube.position.z += animationSpeed;
     }
-  
-    if (moreCube.position.z < -5) {
-      moreCube.position.z += animationSpeed;
-    }
+
+    setTimeout(() => {
+      if (moreCube.position.z < -5) {
+        moreCube.position.z += animationSpeed;
+      }
+    }, 100);
   
   } else if (!animatingRanking && !reversingRanking) {
     reversingRanking = true;
@@ -589,10 +593,11 @@ renderer.setAnimationLoop(() => {
     if (lessCube.position.z > -20) {
       lessCube.position.z -= animationSpeed;
     }
-  
-    if (moreCube.position.z > -20) {
-      moreCube.position.z -= animationSpeed;
-    }
+    setTimeout(() => {
+      if (moreCube.position.z > -20) {
+        moreCube.position.z -= animationSpeed;
+      }
+    }, 100);
   }
   
   
