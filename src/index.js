@@ -406,7 +406,7 @@ renderer.setAnimationLoop(() => {
   
     const arcHeight = -2;
   
-    if (canvasInDepth.position.z < 0) {
+    if (canvasInDepth.position.z < 4) {
       canvasInDepth.position.z += animationSpeed;
       
       const t = easeInOutQuad((canvasInDepth.position.z - 4) / -20);
