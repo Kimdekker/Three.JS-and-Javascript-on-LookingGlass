@@ -448,6 +448,30 @@ window.addEventListener("keydown", (event) => {
         }, 400);
 
 
+        case "ranking":
+          state = "home";
+          animatingRotation = false;
+          animatingRanking = false;
+  
+          targetPosition.set(0, 0, -1);
+          targetPositionSecond.set(0, 0, -4);
+  
+          targetRotation.set(Math.PI / 2, Math.PI / 2, 0);
+          targetRotationSecond.set(Math.PI / 2, Math.PI / 2, 0);
+  
+          updateCubeColor(0x0051FF);
+
+          updateLighting("home");
+
+          setTimeout(() => {
+            lessCube.updateSize(0);
+            moreCube.updateSize(0);
+          }, 400);
+
+  
+          break;
+
+
         break;
 
       default:
