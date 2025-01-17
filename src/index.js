@@ -350,6 +350,7 @@ window.addEventListener("keydown", (event) => {
         case "ranking":
           state = "home";
           animatingRotation = false;
+          animatingRanking = false;
   
           targetPosition.set(0, 0, -1);
           targetPositionSecond.set(0, 0, -4);
@@ -361,10 +362,11 @@ window.addEventListener("keydown", (event) => {
 
           updateLighting("home");
 
-          lessCube.updateSize(0);
-          moreCube.updateSize(0);
+          setTimeout(() => {
+            lessCube.updateSize(0);
+            moreCube.updateSize(0);
+          }, 400);
 
-          animatingRanking = false;
   
           break;
 
