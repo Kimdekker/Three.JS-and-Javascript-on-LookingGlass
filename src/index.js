@@ -115,6 +115,7 @@ starBackground(scene, 100, 6); // Adjust count and areaSize
 const taskOne = task1();
 scene.add(taskOne);
 taskOne.position.set(-1.5, 0, 10);
+taskOne.scale.set(0, 0, 0);
 
 const redLight = new THREE.PointLight(0xff0000, 15, 3);
 redLight.position.set(-2.5, 0, 6);
@@ -127,6 +128,7 @@ taskOne.position.z = -20;
 const taskTwo = task2();
 scene.add(taskTwo);
 taskTwo.position.set(0, 0, 10);
+taskTwo.scale.set(0, 0, 0);
 
 const greenLight = new THREE.PointLight(0x00ff00, 20, 1.2);
 greenLight.position.set(0, 0, 5);
@@ -142,6 +144,7 @@ taskTwo.position.z = -20;
 const taskThree = task3();
 scene.add(taskThree);
 taskThree.position.set(1.5, 0, 10);
+taskThree.scale.set(0, 0, 0);
 
 const blueLighting = new THREE.PointLight(0x0000ff, 15, 3);
 blueLighting.position.set(2.5, 0, 6);
@@ -162,12 +165,14 @@ let animatingTasks = false;
 const canvasInDepth = taskInDepth();
 canvasInDepth.position.set(0, 0.65, 0);
 scene.add(canvasInDepth);
+canvasInDepth.scale.set(0, 0, 0);
 
 canvasInDepth.position.z = -20;
 
 const buttonPlaying = playingButton();
 buttonPlaying.position.set(0, 0, 0);
 scene.add(buttonPlaying);
+buttonPlaying.scale.set(0, 0, 0);
 
 buttonPlaying.position.z = -10;
 
@@ -184,6 +189,9 @@ window.addEventListener("keydown", (event) => {
     switch (state) {
       case "home":
         state = "tasks";
+        taskOne.scale.set(1, 1, 1);
+        taskTwo.scale.set(1, 1, 1);
+        taskThree.scale.set(1, 1, 1);
         animatingTasks = true;
         animatingRotation = true;
         animatingTaskInDepth = false;
@@ -194,6 +202,8 @@ window.addEventListener("keydown", (event) => {
         currentRotation.copy(cubeMesh.rotation);
         targetRotation.set(Math.PI / 2, Math.PI / 2, 0);
         targetRotationSecond.set(Math.PI / 2, Math.PI / 2, 0);
+
+
 
         break;
 
@@ -217,10 +227,21 @@ window.addEventListener("keydown", (event) => {
         cubeMesh.updateSize(1);
         secondCube.updateSize(1.5);
 
+        buttonPlaying.scale.set(1, 0.5, 1);
+        canvasInDepth.scale.set(1, 1, 1);
+
 
         setTimeout(() => {
           buttonPlaying.position.z = 0;
         }, 1000);
+
+        setTimeout(() => {
+          taskOne.scale.set(0, 0, 0);
+          taskTwo.scale.set(0, 0, 0);
+          taskThree.scale.set(0, 0, 0);
+        }, 400);
+
+
 
 
         break;
@@ -240,6 +261,12 @@ window.addEventListener("keydown", (event) => {
 
         targetRotation.set(Math.PI / 4, Math.PI / -4, 0);
         targetRotationSecond.set(Math.PI / 4, Math.PI / -4, 0);
+
+        setTimeout(() => {
+          taskOne.scale.set(0, 0, 0);
+          taskTwo.scale.set(0, 0, 0);
+          taskThree.scale.set(0, 0, 0);
+        }, 400);
 
         break;
 
@@ -263,6 +290,11 @@ window.addEventListener("keydown", (event) => {
 
         buttonPlaying.position.z = -10;
 
+        setTimeout(() => {
+          buttonPlaying.scale.set(0, 0, 0);
+          canvasInDepth.scale.set(0, 0, 0);
+        }, 400);
+
 
 
         break;
@@ -283,6 +315,12 @@ window.addEventListener("keydown", (event) => {
 
         targetRotation.set(Math.PI / 4, Math.PI / -4, 0);
         targetRotationSecond.set(Math.PI / 4, Math.PI / -4, 0);
+
+        setTimeout(() => {
+          taskOne.scale.set(0, 0, 0);
+          taskTwo.scale.set(0, 0, 0);
+          taskThree.scale.set(0, 0, 0);
+        }, 400);
 
         break;
       
@@ -305,6 +343,11 @@ window.addEventListener("keydown", (event) => {
         secondCube.updateSize(1.5);
 
         buttonPlaying.position.z = -10;
+
+        setTimeout(() => {
+          buttonPlaying.scale.set(0, 0, 0);
+          canvasInDepth.scale.set(0, 0, 0);
+        }, 400);
 
 
         break;
