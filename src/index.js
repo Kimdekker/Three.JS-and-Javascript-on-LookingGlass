@@ -163,9 +163,15 @@ const canvasInDepth = taskInDepth();
 canvasInDepth.position.set(0, 0.65, 0);
 scene.add(canvasInDepth);
 
+canvasInDepth.position.z = -20;
+
 const buttonPlaying = playingButton();
 buttonPlaying.position.set(0, 0, 0);
 scene.add(buttonPlaying);
+
+buttonPlaying.position.z = -10;
+
+let animatingTaskInDepth = false;
 
 
 
@@ -180,6 +186,7 @@ window.addEventListener("keydown", (event) => {
         state = "tasks";
         animatingTasks = true;
         animatingRotation = true;
+        animatingTaskInDepth = false;
 
         targetPosition.set(0, 0, -6);
         targetPositionSecond.set(0, 0, -6);
@@ -194,6 +201,7 @@ window.addEventListener("keydown", (event) => {
         state = "taskInDepth";
         animatingTasks = false;
         animatingRotation = true;
+        animatingTaskInDepth = true;
 
         targetPosition.set(.1, -3.5, -10);
         targetPositionSecond.set(0, 0, -3);
@@ -210,6 +218,11 @@ window.addEventListener("keydown", (event) => {
         secondCube.updateSize(1.5);
 
 
+        setTimeout(() => {
+          buttonPlaying.position.z = 0;
+        }, 1000);
+
+
         break;
 
       default:
@@ -221,6 +234,7 @@ window.addEventListener("keydown", (event) => {
         state = "home";
         animatingTasks = false;
         animatingRotation = false;
+        animatingTaskInDepth = false;
 
         targetPosition.set(0, 0, -1);
 
@@ -234,6 +248,7 @@ window.addEventListener("keydown", (event) => {
         animatingTasks = true;
         animatingRotation = true;
         animateRotatingCube = true;
+        animatingTaskInDepth = false;
 
         targetPosition.set(0, 0, -6);
         targetPositionSecond.set(0, 0, -6);
@@ -245,6 +260,51 @@ window.addEventListener("keydown", (event) => {
         updateCubeColor(0x0051FF);
         cubeMesh.updateSize(2);
         secondCube.updateSize(1.5);
+
+        buttonPlaying.position.z = -10;
+
+
+
+        break;
+
+      default:
+        break;
+    }
+  } else if (event.key === "ArrowDown") {
+    switch (state) { 
+      case "tasks":
+        state = "home";
+        animatingTasks = false;
+        animatingRotation = false;
+        animatingTaskInDepth = false;
+
+        targetPosition.set(0, 0, -1);
+        targetPositionSecond.set(0, 0, -6);
+
+        targetRotation.set(Math.PI / 4, Math.PI / -4, 0);
+        targetRotationSecond.set(Math.PI / 4, Math.PI / -4, 0);
+
+        break;
+      
+      case "taskInDepth":
+        state = "home";
+        animatingTasks = false;
+        animatingRotation = false;
+        animateRotatingCube = true;
+        animatingTaskInDepth = false;
+
+        targetPosition.set(0, 0, -1);
+        targetPositionSecond.set(0, 0, -6);
+
+        currentRotation.copy(cubeMesh.rotation);
+        targetRotation.set(Math.PI / 2, Math.PI / 2, 0);
+        targetRotationSecond.set(Math.PI / 2, Math.PI / 2, 0);
+
+        updateCubeColor(0x0051FF);
+        cubeMesh.updateSize(2);
+        secondCube.updateSize(1.5);
+
+        buttonPlaying.position.z = -10;
 
 
         break;
@@ -260,10 +320,10 @@ window.addEventListener("keydown", (event) => {
 let clock = new THREE.Clock();
 
 renderer.setAnimationLoop(() => {
-  let reversingTasks = false;
-
   // Easier-to-compute easing function
   const easeInOutQuad = t => t < 0.5 ? 2 * t * t : 1 - 2 * (1 - t) * (1 - t);
+
+  let reversingTasks = false;
 
   if (animatingTasks) {
     reversingTasks = false; // Reset reversingTasks
@@ -333,6 +393,38 @@ renderer.setAnimationLoop(() => {
       taskThree.position.y = -4 * arcHeight * t * (1 - t);
     }
     }, 200);
+  }
+
+
+
+  // zelfde logica voor een task in depth
+
+  let reversingTaskInDepth = false;
+
+  if (animatingTaskInDepth) {
+    reversingTaskInDepth = false;
+  
+    const arcHeight = -2;
+  
+    if (canvasInDepth.position.z < 0) {
+      canvasInDepth.position.z += animationSpeed;
+      
+      const t = easeInOutQuad((canvasInDepth.position.z - 4) / -20);
+      canvasInDepth.position.y = -4 * arcHeight * t * (1 - t);
+    }
+
+  } else if (!animatingTaskInDepth && !reversingTaskInDepth) {
+    reversingTaskInDepth = true;
+  
+    const arcHeight = -2;
+
+    if (canvasInDepth.position.z > -20) {
+      canvasInDepth.position.z -= animationSpeed;
+  
+      const t = easeInOutQuad(canvasInDepth.position.z / 20);
+      canvasInDepth.position.y = -4 * arcHeight * t * (1 - t);
+    }
+
   }
   
   
