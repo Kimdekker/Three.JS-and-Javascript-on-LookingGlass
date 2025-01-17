@@ -210,12 +210,12 @@ function updateLighting(state) {
 
 
 const lessCube = cube(0.5, 0xFF0000, 0.03);
-lessCube.position.set(-0.75, -0.6, 0);
+lessCube.position.set(-1.2, -1, 0);
 lessCube.rotation.set(Math.PI / 4, Math.PI / -4, 0);
 scene.add(lessCube);
 
-const moreCube = cube(1.8, 0xFFFF00);
-moreCube.position.set(2.35, 1.2, -5);
+const moreCube = cube(1.2, 0xFFFF00);
+moreCube.position.set(1.8, 1, -5);
 moreCube.rotation.set(Math.PI / 2, Math.PI / 4, 0);
 scene.add(moreCube);
 
@@ -391,7 +391,7 @@ window.addEventListener("keydown", (event) => {
         updateLighting("ranking");
 
         lessCube.updateSize(0.5);
-        moreCube.updateSize(1.8);
+        moreCube.updateSize(1.2);
 
         animatingRanking = true;
 
