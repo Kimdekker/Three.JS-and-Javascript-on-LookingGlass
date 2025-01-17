@@ -11,7 +11,7 @@ export function task3() {
     const ctx = canvas.getContext('2d');
 
     // Draw on the canvas
-    ctx.fillStyle = "#FFFFFF";
+    ctx.fillStyle = "#E9EBF5";
     ctx.beginPath();
     ctx.moveTo(268, 10);
     ctx.lineTo(288, 50);
@@ -19,10 +19,10 @@ export function task3() {
     ctx.closePath();
     ctx.fill();
 
-    ctx.fillStyle = "#FFFFFF";
+    ctx.fillStyle = "#E9EBF5";
     ctx.fillRect(25, 35, 475, 80);
 
-    ctx.fillStyle = "#000000";
+    ctx.fillStyle = "#0C0A0A";
     ctx.font = "300 68px helvetica";
     ctx.fillText("Nano Cleaning", 35, 95);
 

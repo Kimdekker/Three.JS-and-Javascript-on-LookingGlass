@@ -11,7 +11,8 @@ import { starBackground } from "./script/starBackground.js";
 import { task1 } from "./script/task1.js";
 import { task2 } from "./script/task2.js";
 import { task3 } from "./script/task3.js";
-import { task4 } from "./script/task4.js";
+import { taskInDepth } from "./script/taskInDepth.js";
+import { playingButton } from "./script/playingButton.js";
 
 
 
@@ -113,10 +114,10 @@ starBackground(scene, 100, 6); // Adjust count and areaSize
 // Task 1 with Red Light
 const taskOne = task1();
 scene.add(taskOne);
-taskOne.position.set(-1, 0, 10);
+taskOne.position.set(-1.5, 0, 10);
 
 const redLight = new THREE.PointLight(0xff0000, 15, 3);
-redLight.position.set(-2, 0, 6);
+redLight.position.set(-2.5, 0, 6);
 scene.add(redLight);
 
 
@@ -140,10 +141,10 @@ taskTwo.position.z = -20;
 // Task 3 with Blue Light
 const taskThree = task3();
 scene.add(taskThree);
-taskThree.position.set(1, 0, 10);
+taskThree.position.set(1.5, 0, 10);
 
 const blueLighting = new THREE.PointLight(0x0000ff, 15, 3);
-blueLighting.position.set(2, 0, 6);
+blueLighting.position.set(2.5, 0, 6);
 blueLighting.intensity = 0;
 scene.add(blueLighting);
 
@@ -158,17 +159,14 @@ let animatingTasks = false;
 
 // ****Task in depth data*************************************
 
-const canvasInDepth = task3();
-canvasInDepth.position.set(1.5, 0, 0);
+const canvasInDepth = taskInDepth();
+canvasInDepth.position.set(0, 0.65, 0);
 scene.add(canvasInDepth);
 
-const canvasInDepth2 = task2();
-canvasInDepth2.position.set(0, 0, 0);
-scene.add(canvasInDepth2);
+const buttonPlaying = playingButton();
+buttonPlaying.position.set(0, 0, 0);
+scene.add(buttonPlaying);
 
-const canvasInDepth3 = task1();
-canvasInDepth3.position.set(-1.5, 0, 0);
-scene.add(canvasInDepth3);
 
 
 // ****INPUTS*************************************************************************************************

@@ -11,7 +11,7 @@ export function task1() {
     const ctx = canvas.getContext('2d');
 
     // Draw on the canvas
-    ctx.fillStyle = "#FFFFFF";
+    ctx.fillStyle = "#E9EBF5";
     ctx.beginPath();
     ctx.moveTo(242, 10);
     ctx.lineTo(262, 50);
@@ -19,10 +19,10 @@ export function task1() {
     ctx.closePath();
     ctx.fill();
 
-    ctx.fillStyle = "#FFFFFF";
+    ctx.fillStyle = "#E9EBF5";
     ctx.fillRect(5, 35, 490, 80);
 
-    ctx.fillStyle = "#000000";
+    ctx.fillStyle = "#0C0A0A";
     ctx.font = "300 68px helvetica";
     ctx.fillText("Quantum Mech", 15, 95);
 
