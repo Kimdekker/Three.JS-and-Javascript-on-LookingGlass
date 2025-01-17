@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { taskShape } from './taskShape.js';
 
-export function task1() {
+export function task4() {
     const octahedron = taskShape();
 
     // Create a canvas for 2D content
@@ -13,18 +13,18 @@ export function task1() {
     // Draw on the canvas
     ctx.fillStyle = "#FFFFFF";
     ctx.beginPath();
-    ctx.moveTo(242, 10);
-    ctx.lineTo(262, 50);
-    ctx.lineTo(222, 50);
+    ctx.moveTo(268, 10);
+    ctx.lineTo(288, 50);
+    ctx.lineTo(248, 50);
     ctx.closePath();
     ctx.fill();
 
     ctx.fillStyle = "#FFFFFF";
-    ctx.fillRect(5, 35, 490, 80);
+    ctx.fillRect(90, 35, 350, 60);
 
     ctx.fillStyle = "#000000";
-    ctx.font = "300 68px helvetica";
-    ctx.fillText("Quantum Mech", 15, 95);
+    ctx.font = "300 50px helvetica";
+    ctx.fillText("Nano Cleaning", 100, 80);
 
     // Create sprite for the 2D element
     const texture = new THREE.CanvasTexture(canvas);
@@ -33,7 +33,7 @@ export function task1() {
     const sprite = new THREE.Sprite(spriteMaterial);
 
     // Position sprite below the 3D object
-    sprite.position.set(-0.02, -0.85, 0);
+    sprite.position.set(0, -0.7, 0);
     sprite.scale.set(1, 0.5, 1);
 
     // Group 3D and 2D elements

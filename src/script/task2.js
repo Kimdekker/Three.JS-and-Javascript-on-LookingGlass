@@ -20,11 +20,11 @@ export function task2() {
     ctx.fill();
 
     ctx.fillStyle = "#FFFFFF";
-    ctx.fillRect(100, 35, 310, 60);
+    ctx.fillRect(50, 35, 413, 80);
 
     ctx.fillStyle = "#000000";
-    ctx.font = "300 50px helvetica";
-    ctx.fillText("Biasoderator", 110, 80);
+    ctx.font = "300 68px helvetica";
+    ctx.fillText("Biasoderator", 60, 95);
 
     // Create sprite for the 2D element
     const texture = new THREE.CanvasTexture(canvas);
@@ -33,7 +33,7 @@ export function task2() {
     const sprite = new THREE.Sprite(spriteMaterial);
 
     // Position sprite below the 3D object
-    sprite.position.set(0, -0.7, 0);
+    sprite.position.set(0, -0.85, 0);
     sprite.scale.set(1, 0.5, 1);
 
     // Group 3D and 2D elements

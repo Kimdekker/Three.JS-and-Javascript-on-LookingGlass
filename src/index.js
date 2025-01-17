@@ -11,7 +11,7 @@ import { starBackground } from "./script/starBackground.js";
 import { task1 } from "./script/task1.js";
 import { task2 } from "./script/task2.js";
 import { task3 } from "./script/task3.js";
-import { taskData } from "./script/taskData.js";
+import { task4 } from "./script/task4.js";
 
 
 
@@ -158,8 +158,17 @@ let animatingTasks = false;
 
 // ****Task in depth data*************************************
 
-const canvasInDepth = taskData();
+const canvasInDepth = task3();
+canvasInDepth.position.set(1.5, 0, 0);
 scene.add(canvasInDepth);
+
+const canvasInDepth2 = task2();
+canvasInDepth2.position.set(0, 0, 0);
+scene.add(canvasInDepth2);
+
+const canvasInDepth3 = task1();
+canvasInDepth3.position.set(-1.5, 0, 0);
+scene.add(canvasInDepth3);
 
 
 // ****INPUTS*************************************************************************************************

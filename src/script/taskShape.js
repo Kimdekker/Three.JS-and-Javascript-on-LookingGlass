@@ -17,7 +17,7 @@ export function taskShape() {
         metalness: 1,
     });
 
-    const geometry = new RoundedBoxGeometry(0.5, 0.5, 0.5, 10, 0.05);  // Size: 1x1x1, Segments, Radius
+    const geometry = new RoundedBoxGeometry(0.7, 0.7, 0.7, 10, 0.05);  // Size: 1x1x1, Segments, Radius
     const mesh = new THREE.Mesh(geometry, material);
     mesh.rotation.set(Math.PI / 4, Math.PI / -4, 0);
 
