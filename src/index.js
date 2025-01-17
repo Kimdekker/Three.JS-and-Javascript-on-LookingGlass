@@ -178,26 +178,50 @@ let animatingTaskInDepth = false;
 
 // ****ranking************************************************
 
-let orangeLighting; // Declare the light variable outside the function
+let orangeLighting;
+let redLighting;
+let yellowLighting;
 
 function updateLighting(state) {
-  // Remove the previous light if it exists
   if (orangeLighting) {
-    scene.remove(orangeLighting);
-    orangeLighting.dispose(); // Optional: Free up resources
+    scene.remove(orangeLighting, redLighting, yellowLighting);
   }
 
-  // Add the new light based on the current state
   if (state === "ranking") {
     orangeLighting = new THREE.PointLight(0xFF4D00, 2, 3);
     orangeLighting.position.set(0.5, 0.5, -2);
     scene.add(orangeLighting);
+
+    // redLighting = new THREE.PointLight(0xFF4D00, 2, 3);
+    // redLighting.position.set(-0.75, -0.6, 1);
+    // scene.add(redLighting);
+
+    // yellowLighting = new THREE.PointLight(0xFF4D00, 2, 3);
+    // yellowLighting.position.set(1.9, 1.2, -4);
+    // scene.add(yellowLighting);
+
+
   } else if (state === "home" || state === "tasks" || state === "taskInDepth") {
     orangeLighting = new THREE.PointLight(0x000000, 0, 0);
     orangeLighting.position.set(0.5, 0.5, -2);
     scene.add(orangeLighting);
   }
 }
+
+
+const lessCube = cube(0.5, 0xFF0000, 0.03);
+lessCube.position.set(-0.75, -0.6, 0);
+lessCube.rotation.set(Math.PI / 4, Math.PI / -4, 0);
+scene.add(lessCube);
+
+const moreCube = cube(1.8, 0xFFFF00);
+moreCube.position.set(2.35, 1.2, -5);
+moreCube.rotation.set(Math.PI / 2, Math.PI / 4, 0);
+scene.add(moreCube);
+
+lessCube.updateSize(0);
+moreCube.updateSize(0);
+
 
 
 
@@ -334,6 +358,9 @@ window.addEventListener("keydown", (event) => {
           updateCubeColor(0x0051FF);
 
           updateLighting("home");
+
+          lessCube.updateSize(0);
+          moreCube.updateSize(0);
   
           break;
 
@@ -356,6 +383,9 @@ window.addEventListener("keydown", (event) => {
         secondCube.updateSize(1.5);
 
         updateLighting("ranking");
+
+        lessCube.updateSize(0.5);
+        moreCube.updateSize(1.8);
 
         break;
 

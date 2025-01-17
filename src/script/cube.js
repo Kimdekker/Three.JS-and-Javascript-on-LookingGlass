@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { RoundedBoxGeometry } from 'three-stdlib';
 
-export function cube(cubeSize = 2, color = 0x0051FF) {
+export function cube(cubeSize = 2, color = 0x0051FF, radius = 0.09) {
     const textureLoader = new THREE.TextureLoader();
 
     const albedoMap = textureLoader.load('https://www.kim-dekker.nl/assets/textures/TextureMapPanel_albedo.jpg');
@@ -25,12 +25,12 @@ export function cube(cubeSize = 2, color = 0x0051FF) {
     });
 
     // Create the geometry and mesh
-    const geometry = new RoundedBoxGeometry(cubeSize, cubeSize, cubeSize, 10, 0.09);  // Size: cubeSize x cubeSize x cubeSize, Segments, Radius
+    const geometry = new RoundedBoxGeometry(cubeSize, cubeSize, cubeSize, 10, radius);  // Size: cubeSize x cubeSize x cubeSize, Segments, Radius
     const cube = new THREE.Mesh(geometry, material);
 
     // Function to update the cube's size
     cube.updateSize = (newSize) => {
-        const newGeometry = new RoundedBoxGeometry(newSize, newSize, newSize, 10, 0.09);
+        const newGeometry = new RoundedBoxGeometry(newSize, newSize, newSize, 10, radius);
         cube.geometry.dispose(); // Dispose of the old geometry to free memory
         cube.geometry = newGeometry;
     };
