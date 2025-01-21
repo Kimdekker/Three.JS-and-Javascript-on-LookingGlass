@@ -385,6 +385,8 @@ window.addEventListener("keydown", (event) => {
             moreCube.updateSize(0);
           }, 400);
 
+          starBackground(scene, 100, 6, -10, 0x4F4747);
+
   
           break;
 
@@ -418,6 +420,9 @@ window.addEventListener("keydown", (event) => {
         moreCube.updateSize(1.2);
 
         animatingRanking = true;
+
+
+        starBackground(scene, 100, 6, -4, 0xFF6600);
 
         break;
 
@@ -498,6 +503,9 @@ window.addEventListener("keydown", (event) => {
             lessCube.updateSize(0);
             moreCube.updateSize(0);
           }, 400);
+
+
+          starBackground(scene, 100, 6, -10, 0x4F4747);
 
   
           break;
