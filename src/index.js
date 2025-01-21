@@ -229,6 +229,20 @@ let animatingRanking = false;
 
 // ****INPUTS*************************************************************************************************
 
+// ****Audio setup*********************************************
+
+const forwardAudio = new Audio('../assets/sound/forward.mp3');
+const backAudio = new Audio('../assets/sound/back.mp3');
+
+const newsReaderAudio = new Audio('../assets/sound/001-Newsreader.mp3');
+const aetheranTwoAudio = new Audio('../assets/sound/02-Aetheran.mp3');
+const aetheranTutorialAudio = new Audio('../assets/sound/03-eatheran+tutorial.mp3');
+const aetheranFiveAudio = new Audio('../assets/sound/005-Aetheran.mp3');
+const aetheranSixAudio = new Audio('../assets/sound/06-Aetheran.mp3');
+
+
+
+
 let state = "home";
 
 window.addEventListener("keydown", (event) => {
@@ -236,6 +250,8 @@ window.addEventListener("keydown", (event) => {
     switch (state) {
       case "home":
         state = "tasks";
+        forwardAudio.play();
+
         taskOne.scale.set(1, 1, 1);
         taskTwo.scale.set(1, 1, 1);
         taskThree.scale.set(1, 1, 1);
@@ -256,6 +272,8 @@ window.addEventListener("keydown", (event) => {
 
       case "tasks":
         state = "taskInDepth";
+        forwardAudio.play();
+
         animatingTasks = false;
         animatingRotation = true;
         animatingTaskInDepth = true;
@@ -298,6 +316,8 @@ window.addEventListener("keydown", (event) => {
     switch (state) {
       case "tasks":
         state = "home";
+        backAudio.play();
+
         animatingTasks = false;
         animatingRotation = false;
         animatingTaskInDepth = false;
@@ -317,6 +337,8 @@ window.addEventListener("keydown", (event) => {
 
       case "taskInDepth":
         state = "tasks";
+        backAudio.play();
+
         taskOne.scale.set(1, 1, 1);
         taskTwo.scale.set(1, 1, 1);
         taskThree.scale.set(1, 1, 1);
@@ -349,6 +371,8 @@ window.addEventListener("keydown", (event) => {
 
         case "ranking":
           state = "home";
+          backAudio.play();
+
           animatingRotation = false;
           animatingRanking = false;
   
@@ -377,6 +401,8 @@ window.addEventListener("keydown", (event) => {
     switch (state) {
       case "home":
         state = "ranking";
+        forwardAudio.play();
+
         animatingRotation = true;
 
         targetPosition.set(0, 0, -4);
@@ -404,6 +430,8 @@ window.addEventListener("keydown", (event) => {
     switch (state) { 
       case "tasks":
         state = "home";
+        backAudio.play();
+
         animatingTasks = false;
         animatingRotation = false;
         animatingTaskInDepth = false;
@@ -424,6 +452,8 @@ window.addEventListener("keydown", (event) => {
       
       case "taskInDepth":
         state = "home";
+        backAudio.play();
+
         animatingTasks = false;
         animatingRotation = false;
         animateRotatingCube = true;
@@ -450,6 +480,8 @@ window.addEventListener("keydown", (event) => {
 
         case "ranking":
           state = "home";
+          backAudio.play();
+
           animatingRotation = false;
           animatingRanking = false;
   
@@ -470,9 +502,6 @@ window.addEventListener("keydown", (event) => {
 
   
           break;
-
-
-        break;
 
       default:
         break;
