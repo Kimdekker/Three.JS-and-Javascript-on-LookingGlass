@@ -13,6 +13,7 @@ import { task2 } from "./script/task2.js";
 import { task3 } from "./script/task3.js";
 import { taskInDepth } from "./script/taskInDepth.js";
 import { playingButton } from "./script/playingButton.js";
+import { ranking } from "./script/ranking.js";
 
 
 
@@ -223,6 +224,16 @@ lessCube.updateSize(0);
 moreCube.updateSize(0);
 
 let animatingRanking = false;
+
+
+
+// **** Ranking labels************************************************
+
+const rankingLabels = ranking();
+scene.add(rankingLabels);
+
+rankingLabels.scale.set(0, 0, 0);
+rankingLabels.position.z = -20;
 
 
 
