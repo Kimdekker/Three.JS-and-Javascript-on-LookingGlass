@@ -437,7 +437,7 @@ window.addEventListener("keydown", (event) => {
         rankingLabels.position.z = 0;
         rankingLabels.scale.set(1, 1, 1);
 
-        // rankingLabels.position.set(0, 0.5, 4);
+        rankingLabels.position.set(0, 0.5, 4);
 
         break;
 
@@ -500,6 +500,8 @@ window.addEventListener("keydown", (event) => {
         case "ranking":
           state = "home";
           document.getElementById('backAudio').play();
+
+          animateRotatingCube = true;
 
           animatingRotation = false;
           animatingRanking = false;
