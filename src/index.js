@@ -398,6 +398,13 @@ window.addEventListener("keydown", (event) => {
 
           starBackground(scene, 100, 6, -10, 0x4F4747);
 
+          rankingLabels.position.z = -10;
+
+          setTimeout(() => {
+            rankingLabels.scale.set(0, 0, 0);
+            rankingLabels.scale.set(0, 0, 0);
+          }, 400);
+
   
           break;
 
