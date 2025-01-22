@@ -301,7 +301,7 @@ window.addEventListener("keydown", (event) => {
         setTimeout(() => {
           targetRotationSecond.set(Math.PI / 2, Math.PI / 2, Math.PI / 2);
           buttonPlaying.position.z = 4;
-        }, 8000);
+        }, 2000);
 
         setTimeout(() => {
           taskOne.scale.set(0, 0, 0);
@@ -432,8 +432,12 @@ window.addEventListener("keydown", (event) => {
 
         animatingRanking = true;
 
-
         starBackground(scene, 100, 6, -4, 0xFF6600);
+
+        rankingLabels.position.z = 0;
+        rankingLabels.scale.set(1, 1, 1);
+
+        // rankingLabels.position.set(0, 0.5, 4);
 
         break;
 
@@ -517,6 +521,13 @@ window.addEventListener("keydown", (event) => {
 
 
           starBackground(scene, 100, 6, -10, 0x4F4747);
+
+          rankingLabels.position.z = -10;
+
+          setTimeout(() => {
+            rankingLabels.scale.set(0, 0, 0);
+            rankingLabels.scale.set(0, 0, 0);
+          }, 400);
 
   
           break;
