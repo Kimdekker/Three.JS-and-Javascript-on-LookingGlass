@@ -282,24 +282,25 @@ window.addEventListener("keydown", (event) => {
         animatingRotation = true;
         animatingTaskInDepth = true;
 
-        targetPosition.set(.1, -1.5, -10);
+        targetPosition.set(.1, -2.5, -7);
         targetPositionSecond.set(0, 0, -3);
 
         targetRotation.set(Math.PI / 4, Math.PI / 4, Math.PI / 2);
         targetRotationSecond.set(Math.PI / 4, Math.PI / 4, Math.PI / 2);
 
         updateCubeColor(0x808080);
-        cubeMesh.updateSize(1);
-        secondCube.updateSize(1.5);
+        cubeMesh.updateSize(1.5);
+        secondCube.updateSize(2);
+
 
         buttonPlaying.scale.set(1, 0.5, 1);
         canvasInDepth.scale.set(1, 1, 1);
 
-        canvasInDepth.position.set(0, 0.5, 4);
+        canvasInDepth.position.set(0, 0.5, 0);
 
         setTimeout(() => {
           targetRotationSecond.set(Math.PI / 2, Math.PI / 2, Math.PI / 2);
-          buttonPlaying.position.z = 4;
+          buttonPlaying.position.z = 0;
         }, 2000);
 
         setTimeout(() => {
@@ -653,13 +654,13 @@ renderer.setAnimationLoop(() => {
   if (animatingTaskInDepth) {
     reversingTaskInDepth = false;
   
-    const arcHeight = -2;
+    const arcHeight = 2;
   
-    if (canvasInDepth.position.z < 4) {
+    if (canvasInDepth.position.z < 0) {
       canvasInDepth.position.z += animationSpeed;
       
-      const t = easeInOutQuad((canvasInDepth.position.z - 4) / -20);
-      canvasInDepth.position.y = -4 * arcHeight * t * (1 - t);
+      const t = easeInOutQuad((canvasInDepth.position.z - 0) / -20);
+      canvasInDepth.position.y = 1 * arcHeight * t * (1 - t);
     }
 
   } else if (!animatingTaskInDepth && !reversingTaskInDepth) {
@@ -671,7 +672,7 @@ renderer.setAnimationLoop(() => {
       canvasInDepth.position.z -= animationSpeed;
   
       const t = easeInOutQuad(canvasInDepth.position.z / 20);
-      canvasInDepth.position.y = -4 * arcHeight * t * (1 - t);
+      canvasInDepth.position.y = 1 * arcHeight * t * (1 - t);
     }
 
   }
