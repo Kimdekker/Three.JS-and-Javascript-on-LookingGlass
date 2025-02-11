@@ -2,10 +2,10 @@
 
 import * as THREE from "three/src/Three.js";
 import { VRButton } from "three/examples/jsm/webxr/VRButton.js";
-import {
-  LookingGlassWebXRPolyfill,
-  LookingGlassConfig,
-} from "@lookingglass/webxr";
+// import {
+//   LookingGlassWebXRPolyfill,
+//   LookingGlassConfig,
+// } from "@lookingglass/webxr";
 import { cube } from "./script/cube.js";
 import { starBackground } from "./script/starBackground.js";
 import { task1 } from "./script/task1.js";
@@ -17,12 +17,12 @@ import { ranking } from "./script/ranking.js";
 
 
 
-const config = LookingGlassConfig;
-config.targetY = 0;
-config.targetZ = 0;
-config.targetDiam = 3;
-config.fovy = (14 * Math.PI) / 180;
-new LookingGlassWebXRPolyfill();
+// const config = LookingGlassConfig;
+// config.targetY = 0;
+// config.targetZ = 0;
+// config.targetDiam = 3;
+// config.fovy = (14 * Math.PI) / 180;
+// new LookingGlassWebXRPolyfill();
 
 const scene = new THREE.Scene();
 
@@ -775,7 +775,7 @@ renderer.setAnimationLoop(() => {
 
 
 // ****LOOKING GLASS BUTTON EN RESIZE SHIZZLE*******************************************************************************************************************************************************
-document.body.append(VRButton.createButton(renderer));
+// document.body.append(VRButton.createButton(renderer));
 
 function resize() {
   renderer.setSize(innerWidth, innerHeight);
