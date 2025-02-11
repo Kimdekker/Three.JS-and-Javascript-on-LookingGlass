@@ -119,8 +119,10 @@ taskOne.position.set(-1.5, 0, 10);
 taskOne.scale.set(0, 0, 0);
 
 const redLight = new THREE.PointLight(0xff0000, 15, 3);
-redLight.position.set(-2.5, 0, 6);
+redLight.position.set(-3.5, 0.5, -1);
 scene.add(redLight);
+redLight.intensity = 0;
+
 
 
 taskOne.position.z = -20;
@@ -132,7 +134,8 @@ taskTwo.position.set(0, 0, 10);
 taskTwo.scale.set(0, 0, 0);
 
 const greenLight = new THREE.PointLight(0x00ff00, 20, 1.2);
-greenLight.position.set(0, 0, 5);
+greenLight.position.set(0, 0.5, -1);
+greenLight.intensity = 0;
 scene.add(greenLight);
 
 taskTwo.position.z = -20;
@@ -145,14 +148,14 @@ taskThree.position.set(1.5, 0, 10);
 taskThree.scale.set(0, 0, 0);
 
 const blueLighting = new THREE.PointLight(0x0000ff, 15, 3);
-blueLighting.position.set(1.5, 0, 6);
+blueLighting.position.set(2.5, 0.5, -1);
 scene.add(blueLighting);
-
+blueLighting.intensity = 0;
 
 taskThree.position.z = -20;
 
 
-let animationSpeed = 3; // snelheid van de tasks die in en uitvliegen. Hoe hoger hoe sneller.
+let animationSpeed = .2; // snelheid van de tasks die in en uitvliegen. Hoe hoger hoe sneller.
 let animatingTasks = false;
 
 
@@ -192,14 +195,6 @@ function updateLighting(state) {
     orangeLighting = new THREE.PointLight(0xFF4D00, 2, 3);
     orangeLighting.position.set(0.5, 0.5, -2);
     scene.add(orangeLighting);
-
-    // redLighting = new THREE.PointLight(0xFF4D00, 2, 3);
-    // redLighting.position.set(-0.75, -0.6, 1);
-    // scene.add(redLighting);
-
-    // yellowLighting = new THREE.PointLight(0xFF4D00, 2, 3);
-    // yellowLighting.position.set(1.9, 1.2, -4);
-    // scene.add(yellowLighting);
 
 
   } else if (state === "home" || state === "tasks" || state === "taskInDepth") {
@@ -262,6 +257,10 @@ window.addEventListener("keydown", (event) => {
         animatingRotation = true;
         animatingTaskInDepth = false;
 
+        blueLighting.intensity = 15;
+        redLight.intensity = 15;
+        greenLight.intensity = 15;
+
         targetPosition.set(0, 0, -6);
         targetPositionSecond.set(0, 0, -6);
 
@@ -310,6 +309,11 @@ window.addEventListener("keydown", (event) => {
         }, 400);
 
 
+        blueLighting.intensity = 0;
+        redLight.intensity = 0;
+        greenLight.intensity = 0;
+
+
 
 
         break;
@@ -331,6 +335,10 @@ window.addEventListener("keydown", (event) => {
 
         targetRotation.set(Math.PI / 4, Math.PI / -4, 0);
         targetRotationSecond.set(Math.PI / 4, Math.PI / -4, 0);
+
+        blueLighting.intensity = 0;
+        redLight.intensity = 0;
+        greenLight.intensity = 0;
 
         setTimeout(() => {
           taskOne.scale.set(0, 0, 0);
@@ -354,6 +362,10 @@ window.addEventListener("keydown", (event) => {
 
         targetPosition.set(0, 0, -6);
         targetPositionSecond.set(0, 0, -6);
+
+        blueLighting.intensity = 15;
+        redLight.intensity = 15;
+        greenLight.intensity = 15;
 
         currentRotation.copy(cubeMesh.rotation);
         targetRotation.set(Math.PI / 2, Math.PI / 2, 0);
@@ -565,41 +577,41 @@ renderer.setAnimationLoop(() => {
   if (animatingTasks) {
     reversingTasks = false; // Reset reversingTasks
   
-    const arcHeight = -2; // Adjust height of the arc
-  
+    const arcHeight = 10; // Adjust height of the arc
+
     // Animating taskOne
-    if (taskOne.position.z < 4) {
+    if (taskOne.position.z < -2) {
       taskOne.position.z += animationSpeed;
       
-      const t = easeInOutQuad((taskOne.position.z - 4) / -20);
-      taskOne.position.y = -4 * arcHeight * t * (1 - t);
+      const t = easeInOutQuad((taskOne.position.z - 1) / -20);
+      taskOne.position.y = 1 * arcHeight * t * (1 - t);
     }
   
     // Animating taskTwo
     setTimeout(() => {
-      if (taskTwo.position.z < 4) {
+      if (taskTwo.position.z < -2) {
         taskTwo.position.z += animationSpeed;
     
-        const t = easeInOutQuad((taskTwo.position.z - 4) / -20);
-        taskTwo.position.y = -4 * arcHeight * t * (1 - t);
+        const t = easeInOutQuad((taskTwo.position.z - 1) / -20);
+        taskTwo.position.y = 1 * arcHeight * t * (1 - t);
       }
     }, 100);
 
   
     // Animating taskThree
     setTimeout(() => {
-      if (taskThree.position.z < 4) {
+      if (taskThree.position.z < -2) {
       taskThree.position.z += animationSpeed;
   
-      const t = easeInOutQuad((taskThree.position.z - 4) / -20);
-      taskThree.position.y = -4 * arcHeight * t * (1 - t);
+      const t = easeInOutQuad((taskThree.position.z - 1) / -20);
+      taskThree.position.y = 1 * arcHeight * t * (1 - t);
       }
     }, 200);
 
   } else if (!animatingTasks && !reversingTasks) {
     reversingTasks = true;
   
-    const arcHeight = -2; // Adjust height of the arc
+    const arcHeight = 10; // Adjust height of the arc
   
     // Reversing taskOne
 
@@ -608,7 +620,7 @@ renderer.setAnimationLoop(() => {
       taskOne.position.z -= animationSpeed;
   
       const t = easeInOutQuad(taskOne.position.z / 20);
-      taskOne.position.y = -4 * arcHeight * t * (1 - t);
+      taskOne.position.y = 1 * arcHeight * t * (1 - t);
     }
   
     // Reversing taskTwo
@@ -617,7 +629,7 @@ renderer.setAnimationLoop(() => {
         taskTwo.position.z -= animationSpeed;
     
         const t = easeInOutQuad(taskTwo.position.z / 20);
-        taskTwo.position.y = -4 * arcHeight * t * (1 - t);
+        taskTwo.position.y = 1 * arcHeight * t * (1 - t);
       }
     }, 100);
   
@@ -627,7 +639,7 @@ renderer.setAnimationLoop(() => {
       taskThree.position.z -= animationSpeed;
   
       const t = easeInOutQuad(taskThree.position.z / 20);
-      taskThree.position.y = -4 * arcHeight * t * (1 - t);
+      taskThree.position.y = 1 * arcHeight * t * (1 - t);
     }
     }, 200);
   }
@@ -704,14 +716,14 @@ renderer.setAnimationLoop(() => {
 
   // cube mesh animation backwards
 
-  cubeMesh.position.lerp(targetPosition, 0.1); // Adjust the speed for position
+  cubeMesh.position.lerp(targetPosition, 0.03); // Adjust the speed for position
 
     // Animate rotation to targetRotation
     if (animatingRotation) {
       const targetQuat = new THREE.Quaternion().setFromEuler(targetRotation);
   
       // Slerp between the current and target quaternions
-      cubeMesh.quaternion.slerp(targetQuat, 0.1); // Adjust speed
+      cubeMesh.quaternion.slerp(targetQuat, 0.05); // Adjust speed
   
       // Check if rotation is close to target to stop animating
       if (cubeMesh.quaternion.angleTo(targetQuat) < 0.01) {
@@ -728,14 +740,14 @@ renderer.setAnimationLoop(() => {
 
 
 
-  secondCube.position.lerp(targetPositionSecond, 0.1); // Adjust the speed for position
+  secondCube.position.lerp(targetPositionSecond, 0.03); // Adjust the speed for position
   
   // Animate rotation to targetRotation
   if (animatingRotation) {
     const targetQuat = new THREE.Quaternion().setFromEuler(targetRotationSecond);
 
     // Slerp between the current and target quaternions
-    secondCube.quaternion.slerp(targetQuat, 0.1); // Adjust speed
+    secondCube.quaternion.slerp(targetQuat, 0.05); // Adjust speed
 
     // Check if rotation is close to target to stop animating
     if (secondCube.quaternion.angleTo(targetQuat) < 0.01) {
