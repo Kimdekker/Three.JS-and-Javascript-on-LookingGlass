@@ -1,11 +1,6 @@
 // main.js
 
 import * as THREE from "three/src/Three.js";
-import { VRButton } from "three/examples/jsm/webxr/VRButton.js";
-// import {
-//   LookingGlassWebXRPolyfill,
-//   LookingGlassConfig,
-// } from "@lookingglass/webxr";
 import { cube } from "./script/cube.js";
 import { starBackground } from "./script/starBackground.js";
 import { task1 } from "./script/task1.js";
@@ -15,14 +10,6 @@ import { taskInDepth } from "./script/taskInDepth.js";
 import { playingButton } from "./script/playingButton.js";
 import { ranking } from "./script/ranking.js";
 
-
-
-// const config = LookingGlassConfig;
-// config.targetY = 0;
-// config.targetZ = 0;
-// config.targetDiam = 3;
-// config.fovy = (14 * Math.PI) / 180;
-// new LookingGlassWebXRPolyfill();
 
 const scene = new THREE.Scene();
 
@@ -105,7 +92,7 @@ const updateCubeColor = (newColor) => {
 
 // ****STARS*************************************
 
-starBackground(scene, 100, 6); // Adjust count and areaSize
+starBackground(scene, 100, 10); // Adjust count and areaSize
 
 
 
@@ -206,12 +193,12 @@ function updateLighting(state) {
 
 
 const lessCube = cube(0.5, 0xFF0000, 0.03);
-lessCube.position.set(-1.2, -1, 0);
+lessCube.position.set(-0.75, -0.65, 0);  // postioning: x, y  , z
 lessCube.rotation.set(Math.PI / 4, Math.PI / -4, 0);
 scene.add(lessCube);
 
 const moreCube = cube(1.2, 0xFFFF00);
-moreCube.position.set(1.8, 1, -5);
+moreCube.position.set(1.85, 0.9, 0);
 moreCube.rotation.set(Math.PI / 2, Math.PI / 4, 0);
 scene.add(moreCube);
 
@@ -409,7 +396,7 @@ window.addEventListener("keydown", (event) => {
             moreCube.updateSize(0);
           }, 400);
 
-          starBackground(scene, 100, 6, -10, 0x4F4747);
+          starBackground(scene, 100, 10, -10, 0x4F4747);
 
           rankingLabels.position.z = -10;
 
@@ -454,10 +441,9 @@ window.addEventListener("keydown", (event) => {
 
         starBackground(scene, 100, 6, -4, 0xFF6600);
 
-        rankingLabels.position.z = 0;
-        rankingLabels.scale.set(1, 1, 1);
+        rankingLabels.scale.set(0.5, 0.5, 0.5);
 
-        rankingLabels.position.set(0, 0.5, 4);
+        rankingLabels.position.set(0, 0.5, 1);
 
         break;
 
@@ -542,7 +528,7 @@ window.addEventListener("keydown", (event) => {
           }, 400);
 
 
-          starBackground(scene, 100, 6, -10, 0x4F4747);
+          starBackground(scene, 100, 10, -10, 0x4F4747);
 
           rankingLabels.position.z = -10;
 
@@ -691,7 +677,7 @@ renderer.setAnimationLoop(() => {
     }
 
     setTimeout(() => {
-      if (moreCube.position.z < -5) {
+      if (moreCube.position.z < -3) {
         moreCube.position.z += animationSpeed;
       }
     }, 100);
@@ -788,7 +774,6 @@ renderer.setAnimationLoop(() => {
 
 
 // ****LOOKING GLASS BUTTON EN RESIZE SHIZZLE*******************************************************************************************************************************************************
-// document.body.append(VRButton.createButton(renderer));
 
 function resize() {
   renderer.setSize(innerWidth, innerHeight);

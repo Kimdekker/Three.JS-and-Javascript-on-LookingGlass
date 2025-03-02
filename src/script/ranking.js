@@ -30,7 +30,7 @@ export function ranking() {
     const sprite = new THREE.Sprite(spriteMaterial);
 
     sprite.scale.set(1, 0.5, 1);
-    sprite.position.set(0, -0.5, 0);
+    sprite.position.set(0, -0.35, 0);
 
 
     // 2e label
@@ -62,7 +62,7 @@ export function ranking() {
     const spriteTwo = new THREE.Sprite(spriteMaterialTwo);
 
     spriteTwo.scale.set(1, 0.5, 1);
-    spriteTwo.position.set(-1, -1.2, 0);
+    spriteTwo.position.set(-1, -1.3, 0);
 
     // 3e label
 
@@ -96,7 +96,7 @@ export function ranking() {
     
     // Set sprite scale and position
     spriteThree.scale.set(1, 0.5, 1);
-    spriteThree.position.set(1, 0.2, 0);
+    spriteThree.position.set(1.35, 0.27, 0);
 
 
     const group = new THREE.Group();
